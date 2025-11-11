@@ -32,3 +32,6 @@ Instalações das dependências (json-pack)
 - bcrypt (oferece as funções de criptografia: codificar e descodificar strings, visando aumentar a segurança de uso)
 - method-override (permite a utilização dos métodos post(atualizar) e delete(excluir) de forma simplificada pelo server. Sua aplicação é necessária, pois, apesar de ser possível pelo prompt, a execução de ambos os métodos pelo usuário e de forma suave só é possível por intermédio de variações do métodos put(inserir) e get(mostrar), oportunizadas pela dependência)
 - 
+
+server.js -> 
+app.js -> 
