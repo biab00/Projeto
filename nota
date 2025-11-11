@@ -1,0 +1,34 @@
+Projeto criado com base nos meus conhecimentos, portanto, por favor, perdoe qualquer erro.
+
+Config 
+
+Essa pasta armazena a conexão primária do banco de dados e a exporta para utilização em outros contextos. Por hora, sabemos pouco sobre suas outras funções, se existirem.
+1 arquivo .js
+
+Controller
+
+Essa pasta realiza as conexões das funções com as chamadas cliente-servidor, recebendo e lidando com as requisições(req) e ofertando respostas(res). O conteúdo do diretório é responsável por interpretar o resultado das funções e redirecionar para as páginas corretas, controlando os erros.
+
+Model
+
+Essa pasta produz as funções que seram utilizadas na navegação, de tal forma que são exportadas como métodos para outros arquivos. É o tratamento bruto dos dados.
+
+Public
+
+Essa pasta é responsável pela estilização do conteúdo exposto ao usuário por meio das linguagens css e js. Sua função pode ser facilitada por api's como o Boodstrap ou por análise de construção web a partir da tecla F12 em qualquer site do chrome.
+
+Views
+
+Essa pasta é responsável por armazenar a parte que será renderizada do projeto, ou seja, as páginas "cruas" que serão vistas pelos usuários. Digo "cruas", pois a incorporação de estilo (css e js) não é perceptível nesta etapa, uma vez que a função de deixar o site bonito são arquivos de outra pasta.
+
+|_Partials -> "padaços" de páginas que podem ser reutilizadas, visto que se repetem em diferentes arquivos da interface, como por exemplo um menu.
+|_Pages -> As páginas propriamente ditas, estruturas de tags por exemplo.
+
+
+Instalações das dependências (json-pack)
+- mysql (Permite a integração com o banco de dados, é um meio para a manipulação do mysql via javascript a partir dos comandos da própria linguagem SQL)
+- express (Parte básica do node.js. Não possuo certezas sobre sua função, entretanto sei que é essencial para realizar as utilizações do server)
+- path (Permite que a máquina reconheça os caminhos das pastas views e public para redirecionamentos ao longo do código)
+- bcrypt (oferece as funções de criptografia: codificar e descodificar strings, visando aumentar a segurança de uso)
+- method-override (permite a utilização dos métodos post(atualizar) e delete(excluir) de forma simplificada pelo server. Sua aplicação é necessária, pois, apesar de ser possível pelo prompt, a execução de ambos os métodos pelo usuário e de forma suave só é possível por intermédio de variações do métodos put(inserir) e get(mostrar), oportunizadas pela dependência)
+- 
