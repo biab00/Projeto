@@ -4,9 +4,17 @@ const inicio = async (req, res) => {
     await model.iniciarBD()
     return res.render("pages/home");
 }
+
 const cadastro = async (req, res) => {
-    await model.login(req.body);
+    await model.cadastro(req.body);
     res.send("De boa")
 }
 
-module.exports = {inicio, cadastro};
+
+const login = async (req, res) => {
+    const mensagem = await model.login(req.body);
+    console.log(mensagem);
+    res.render("pages/PaginaInicial")
+}
+
+module.exports = {inicio, cadastro, login};

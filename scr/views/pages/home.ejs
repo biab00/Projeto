@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <%-include("../partials/header")%>
+    <%-include("../partials/head")%>
     <body>
         <main>
             <h1>OII parceiro</h1>
-            <form action="/cadastro" method="POST">
-                Nome <input placeholder="Nome" name="nome">
+            <form action="/login" method="POST">
                 Usuário <input placeholder="Usuário" name="username">
                 Senha <input placeholder="Senha" name="senha">
-                <button type="submit">Cadastrar</button>
-                <a href="/login">Já tenho conta</a>
+                <button type="submit">Entrar</button>
+                <a href="/cadastro">Não tem conta? Cadastre-se</a>
             </form>
         </main>
     </body>
