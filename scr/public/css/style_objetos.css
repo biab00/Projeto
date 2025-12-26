@@ -1,0 +1,35 @@
+body{
+    background-color: bisque;   
+}
+
+*{
+    margin: 0;
+}
+
+main{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 90vh;
+    justify-content: center;
+}
+
+.recado{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 15%;
+    margin-right: 15%;
+    width: 70%;
+    align-items: center;
+}
+
+.item{
+    text-align: center;
+    border: 2px black;
+    background-color: coral;
+    margin: 2%;
+    padding:1%;
+    min-height: 20%;
+    min-width: 20%;
+}

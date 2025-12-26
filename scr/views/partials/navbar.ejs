@@ -1,7 +1,52 @@
+<style>
+    nav{    
+    padding-top: 2%;
+    max-width: 2.5vw;
+    position: fixed;
+    left: 0;
+    height: 100%;
+    opacity: 0.7;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(211, 208, 0);
+    color: black;
+    transition: 1.2s;
+}
+
+nav:hover a {
+    opacity: 1;
+}
+nav:hover{
+    max-width: 20vw;
+}
+
+nav a{
+    display: flex;
+    opacity: 0;
+    text-decoration: none;
+    color: black;
+    max-height: 10%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    transition: all 0.7s ease-in-out;
+}
+
+nav a:hover{
+    background-color: orangered;
+    cursor: pointer;
+}
+</style>
+
 <nav id="navbar">
-    <a href="/livros"> Livro <img src="/img/Livro.png" width="auto" height="24vh"> </a>
+    <a href="/livros"> Livros <img src="/img/Livro.png" width="auto" height="24vh"> </a>
     <a href="/calendario"> Calendário <img src="/img/Calendario.png" width="auto" height="30vh"> </a>
     <a href="/TV"> TV <img src="/img/tv.png" width="auto" height="26vh"> </a>
     <a href="/jogos"> Jogos <img src="/img/controle.png" width="auto" height="30vh"> </a>
+    <a href="/musicas"> Músicas <img src="/img/nota.png" width="auto" height="30vh"> </a>
     <a href="/config"> Config <img src="img/Config.png" width="auto" height="28vh"> </a>
 </nav>

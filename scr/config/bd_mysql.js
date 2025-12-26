@@ -1,10 +1,11 @@
 const mysql2 = require("mysql2");
 
 const conn = mysql2.createConnection({
-    host: "localhost",
+    host: "shinkansen.proxy.rlwy.net",
     user: "root",
-    password: "aluno123",
-    database: "banco_dados"
+    password: "VSYfWCmFoZIWRYlESQYdQIUTxlxYdrAV",
+    port: 37040,
+    database: "railway"
 })
 
 conn.connect((erro) => {

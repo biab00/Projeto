@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <%-include("../../partials/head_objetos")%>
+    <body>
+        <%- include("../../partials/navbar")%>
+        <main>
+            <% if(tv.length > 0) { %>
+                <%for(let i = 0; i<tv.length; i++) { %>
+                    <div class="item">
+                        <h3><%=tv[i].nome_tv%></h3>
+                        <h4><%=tv[i].anoTv%></h4>
+                        <h4><%=tv[i].categoria%></h4>
+                    </div>
+                <%}%>
+                <div class="recado">
+                    <h4>Quer adicionar outro volume? Vá em frente</h4>
+                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                </div>
+            <%} else {%>
+                <div class="recado">
+                    <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de adicionar algum?</h1>
+                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                </div>
+                <%}%>
+        </main>
+    </body>
+</html>

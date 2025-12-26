@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <%-include("../../partials/head_objetos")%>
+    <body>
+        <%- include("../../partials/navbar")%>
+        <main>
+            <% if(jogos.length > 0) { %>
+                <%for(let i = 0; i<jogos.length; i++) { %>
+                    <div class="item">
+                        <h3><%=jogos[i].nome_jogo%></h3>
+                        <h4><%=jogos[i].criador%></h4>
+                        <h4><%=jogos[i].anoJogo%></h4>
+                        <h4><%=jogos[i].plataforma%></h4>
+                    </div>
+                <%}%>
+                <div class="recado">
+                    <h4>Quer adicionar outro volume? Vá em frente</h4>
+                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                </div>
+            <%} else {%>
+                <div class="recado">
+                    <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de adicionar algum?</h1>
+                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                </div>
+                <%}%>
+        </main>
+    </body>
+</html>

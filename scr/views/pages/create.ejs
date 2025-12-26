@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+</head>
+
+<body>
+    <a href="/inicio" style="justify-self: flex-start; align-self: flex-start; width:15vw"> <button>Voltar</button> </a>
+    <form action="/addItem" method="POST">
+        <select id="select" name="tipo">
+            <option selected disabled>Selecione um tipo</option>
+            <option value="jogo">Jogos</option>
+            <option value="livro">Livros</option>
+            <option value="tv">TV</option>
+            <option value="musica"> Músicas </option>
+        </select>
+        </br>
+        <div id="divTV" style="display: none">
+            <h3>TV</h3>
+            Nome: <input name="nome_tv">
+            Categoria (filme, serie): <input name="categoria">
+            Ano: <input name="anoTv">
+        </div>
+        <div id="divJogos" style="display: none">
+            <h3>Jogo</h3>
+            Nome: <input name="nome_jogo">
+            Criador: <input name="criador">
+            Ano: <input name="anoJogo">
+            Plataforma: <input name="plataforma">
+        </div>
+        <div id="divLivros" style="display: none">
+            <h3>Livro</h3>
+            Título: <input name="titulo">
+            Autor: <input name="autor">
+            Descrição: <input name="descricao">
+            ISBN: <input name="isbn">
+        </div>
+        <div id="divMusica" style="display: none">
+            <h3>Música</h3>
+            Nome: <input name="nome_musica">
+            Banda: <input name="banda">
+            Ano: <input name="anoMusica">
+        </div>
+
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+
+</html>
+
+<script>
+    const select = document.querySelector("#select");
+
+    select.addEventListener("change", () => {
+        if (select.value == "musica") {
+            document.querySelector("#divMusica").style.display = "flex";
+            document.querySelector("#divTV").style.display = "none";
+            document.querySelector("#divLivros").style.display = "none";
+            document.querySelector("#divJogos").style.display = "none";
+        }
+        if (select.value == "tv") {
+            document.querySelector("#divTV").style.display = "flex";
+            document.querySelector("#divMusica").style.display = "none";
+            document.querySelector("#divLivros").style.display = "none";
+            document.querySelector("#divJogos").style.display = "none";
+        }
+        if (select.value == "livro") {
+            document.querySelector("#divLivros").style.display = "flex";
+            document.querySelector("#divMusica").style.display = "none";
+            document.querySelector("#divTV").style.display = "none";
+            document.querySelector("#divJogos").style.display = "none";
+        }
+        if (select.value == "jogo") {
+            document.querySelector("#divJogos").style.display = "flex";
+            document.querySelector("#divMusica").style.display = "none";
+            document.querySelector("#divTV").style.display = "none";
+            document.querySelector("#divLivros").style.display = "none";
+        }
+    });
+</script>
+
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
