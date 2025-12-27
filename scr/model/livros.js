@@ -1,18 +1,34 @@
-const livros = sequelize.define("Livros", {
+const db = require("../config/bd_sequelize");
+const sequelize= require("sequelize");
+
+const livros = db.define("Livros", {
     titulo: {
-        type: DataTypes.STRING(200),
+        type: sequelize.STRING(200),
         allowNull: false,
     },
     autor: {
-        type: DataTypes.STRING(20),
+        type: sequelize.STRING(20),
         allowNull: false,
     },
     descricao: {
-        type: DataTypes.STRING(30),
+        type: sequelize.STRING(30),
     },
     isbn: {
-        type: DataTypes.INTEGER,
+        type: sequelize.INTEGER,
     },
 });
 
 livros.sync({ alter: true })
+
+const buscarLivros = async (nome) => {
+    try {
+    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${nome}`);
+    const data = await response.json();
+    return data;
+    } catch (error) {
+        return { erro: "Erro ao buscar livros: ", error };
+    }}
+
+const todos_livros = async () => livros.findAll()
+
+module.exports = {buscarLivros, todos_livros};

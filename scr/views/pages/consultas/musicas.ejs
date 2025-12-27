@@ -4,25 +4,25 @@
     <body>
         <%- include("../../partials/navbar")%>
         <main>
-            <% if(musicas.length > 0) { %>
-                <%for(let i = 0; i<musicas.length; i++) { %>
+            <% if(result.length > 0) { %>
+                <%for(let i = 0; i<result.length; i++) { %>
                     <div class="item">
-                        <h3><%=musicas[i].title%>: <%=musicas[i].id%></h3>
-                        <h4><%=musicas[i].artist.name%></h4>
-                        <h4><%=musicas[i].album.title%></h4>
-                        <%if (musicas[i].album.cover) { %>
-                            <img src="<%=musicas[i].album.cover%>">
+                        <h3><%=result[i].title%>: <%=result[i].id%></h3>
+                        <h4><%=result[i].artist.name%></h4>
+                        <h4><%=result[i].album.title%></h4>
+                        <%if (result[i].album.cover) { %>
+                            <img src="<%=result[i].album.cover%>">
                         <% } %>
-                        <h4><%=musicas[i].duration%> minutos</h4>
-                        <% if(musicas[i].preview) { %>
+                        <h4><%=result[i].duration%> minutos</h4>
+                        <% if(result[i].preview) { %>
                         <audio controls style="width:70%">
-                           <source src="<%=musicas[i].preview%>" type="audio/mp3">
+                           <source src="<%=result[i].preview%>" type="audio/mp3">
                            Não foi possível carregar o áudio.
                         </audio>
                         
                         <% } %>
                         
-                        <a href="/addMusica/<%=musicas[i].id%>"><button>Adicionar a lista!</button></a>
+                        <a href="/addMusica/<%=result[i].id%>"><button>Adicionar a lista!</button></a>
                     </div>
                 <%}%>
                 <div class="recado">

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <%-include("../../partials/head_objetos")%>
+    <body>
+        <%- include("../../partials/navbar")%>
+        <main>
+            <% if(result.length > 0) { %>
+                <%for(let i = 0; i<result.length; i++) { %>
+                    <div class="item">
+                        <h3><%=result[i].name%>: <%=result[i].id%></h3>
+                        <% if(result[i].cover) { %>
+                        <img src="<%=result[i].cover.url%>">
+                        <% } %>
+                        <h4><%=result[i].first_release_date%></h4>
+                        <%if (result[i].involved_companies) { %>
+                            <h4> Desenvolvedores: </h4>
+                            <%for(let e = 0; e<result[i].involved_companies.length; e++) { %>
+                                <li><%=result[i].involved_companies[e]%></li>
+                            <%}%> 
+                        <%}%>
+                        <h4><%=result[i].summary%></h4>
+                        <%if (result[i].platforms) { %>
+                        <h4> Plataformas: </h4>
+                        <ul>
+                        <%for(let e = 0; e<result[i].platforms.length; e++) { %>
+                            <li><%=result[i].platforms[e].name%></li>
+                        <%}%>
+                        </ul>
+                        <% } %>
+                        <a href="/addItem/<%=result[i].id%>"><button>Adicionar a lista!</button></a>
+                    </div>
+                <%}%>
+                <div class="recado">
+                    <h4>Não encontro o que procurava? Tente outra vez</h4>
+                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                </div>
+            <%} else {%>
+                <div class="recado">
+                    <h1 style="text-align: center;">Nenhum titulo encontrado, confira se digitou corretamente, ou ainda não o temos</h1>
+                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                </div>
+                <%}%>
+        </main>
+    </body>
+</html>

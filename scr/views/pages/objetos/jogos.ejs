@@ -1,28 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <%-include("../../partials/head_objetos")%>
+<%-include("../../partials/head_objetos")%>
+
     <body>
         <%- include("../../partials/navbar")%>
-        <main>
-            <% if(jogos.length > 0) { %>
-                <%for(let i = 0; i<jogos.length; i++) { %>
-                    <div class="item">
-                        <h3><%=jogos[i].nome_jogo%></h3>
-                        <h4><%=jogos[i].criador%></h4>
-                        <h4><%=jogos[i].anoJogo%></h4>
-                        <h4><%=jogos[i].plataforma%></h4>
-                    </div>
-                <%}%>
-                <div class="recado">
-                    <h4>Quer adicionar outro volume? Vá em frente</h4>
-                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                </div>
-            <%} else {%>
-                <div class="recado">
-                    <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de adicionar algum?</h1>
-                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                </div>
-                <%}%>
-        </main>
+            <main>
+                <% if(jogos.length> 0) { %>
+                    <%for(let i=0; i<jogos.length; i++) { %>
+
+                        <div class="item">
+                            <h3>
+                                <%=jogos[i][0].name%>: <%=jogos[i][0].id%>
+                            </h3>
+                            <img src="<%=jogos[i][0].cover.url%>">
+                            <h4>
+                                <%=jogos[i][0].first_release_date%>
+                            </h4>
+                            <%if (jogos[i][0].involved_companies) { %>
+                                <h4> Desenvolvedores: </h4>
+                                <%for(let e=0; e<jogos[i][0].involved_companies.length; e++) { %>
+                                    <li>
+                                        <%=jogos[i][0].involved_companies[e]%>
+                                    </li>
+                                    <%}%>
+                                        <%}%>
+                                            <h4>
+                                                <%=jogos[i][0].summary%>
+                                            </h4>
+                                            <h4> Plataformas: </h4>
+                                            <ul>
+                                                <%for(let e=0; e<jogos[i][0].platforms.length; e++) { %>
+                                                    <li>
+                                                        <%=jogos[i][0].platforms[e].name%>
+                                                    </li>
+                                                    <%}%>
+                                            </ul>
+
+                                            <div>
+                                                <p>Alerta: Excluir um volume é uma ação irreversível.</p>
+                                            </div>
+
+                                            <a href="/deleteItem/<%=jogos[i][0].id%>"><button>Excluir da lista!</button></a>
+                                        </div>
+                        <% } %>
+                            <div class="recado">
+                                <h4>Quer adicionar outro volume? Vá em frente</h4>
+                                <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                            </div>
+                            <%} else {%>
+                                <div class="recado">
+                                    <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de
+                                        adicionar algum?</h1>
+                                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                                </div>
+                                <%}%>
+            </main>
     </body>
+
 </html>
