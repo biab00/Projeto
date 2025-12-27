@@ -50,14 +50,31 @@ const addMusica = async (req, res) => {
     await modelMusica.add(req.params.id)
     res.redirect("/musicas")
 }
-const musicas = async (req, res) => {
-    const musicas = await modelMusica.todas_musicas() 
+const musicas = async (req, res) => {;
+    const musicas = await modelMusica.todas_musicas()
+    res.render("pages/objetos/musica", {musicas}) 
 }
 
 const add = async (req, res) => {
-    const result = await model.add(req.body)
-    if (result) {
-        res.render("pages/consultas/musicas", {result});
+    if (req.body.tipo == "livro") {
+        const modelLivro = require("../model/livros");
+        const result = await modelLivro.buscarLivros(req.body.nome);
+        res.render("pages/consultas/livro", {result});
+    }
+    if (req.body.tipo == "tv") {
+        const modelTv = require("../model/tv");
+        const result = await modelTv.buscarTV(req.body.nome);
+        res.render("pages/consultas/tv", {result});
+    }
+    if (req.body.tipo == "jogo") {
+        const modelJogo = require("../model/jogos");
+        const result = await modelJogo.buscarJogos(req.body.nome);
+        res.render("pages/consultas/jogos", {result});
+    }
+    if (req.body.tipo == "musica") {
+        const modelMusica = require("../model/musicas");
+        const result = await modelMusica.buscarMusicas(req.body.nome);
+        res.render("pages/consultas/musica", {result});
     }
 }
 

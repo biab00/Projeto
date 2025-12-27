@@ -37,14 +37,10 @@ const buscarMusicas = async (nome_musica) => {
 }
 
 const buscarMusicasId = async (id) => {
-    console.log(id)
         const response = await fetch(`https://api.deezer.com/track/${id}`);
-        console.log(JSON.stringify(response.Content));
         const data = await response.json();
-        for(let i = 0; i < data.length; i++){
-        const audio = (data[i].duration / 60).toFixed(2);
-        data[i].duration = audio;
-        }
+        const audio = (data.duration / 60).toFixed(1);
+        data.duration = audio;
         return data;
 }
 

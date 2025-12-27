@@ -12,7 +12,9 @@
                             <h3>
                                 <%=jogos[i][0].name%>: <%=jogos[i][0].id%>
                             </h3>
+                            <%if(jogos[i][0].cover) { %>
                             <img src="<%=jogos[i][0].cover.url%>">
+                            <%}%>
                             <h4>
                                 <%=jogos[i][0].first_release_date%>
                             </h4>
@@ -27,14 +29,17 @@
                                             <h4>
                                                 <%=jogos[i][0].summary%>
                                             </h4>
+                                            <%if (jogos[i][0].platforms) { %>
                                             <h4> Plataformas: </h4>
-                                            <ul>
+                                            <ul>    
                                                 <%for(let e=0; e<jogos[i][0].platforms.length; e++) { %>
                                                     <li>
                                                         <%=jogos[i][0].platforms[e].name%>
                                                     </li>
                                                     <%}%>
                                             </ul>
+
+                                            <% } %>
 
                                             <div>
                                                 <p>Alerta: Excluir um volume é uma ação irreversível.</p>

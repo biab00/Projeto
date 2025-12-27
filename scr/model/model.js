@@ -40,23 +40,6 @@ const login = async (params) => {
 }
 
 
-const add = async (params) => {
-    if (params.tipo == "livro") {
-        const modelLivro = require("./livros");
-        return await modelLivro.buscarLivros(params.nome);
-    }
-    if (params.tipo == "tv") {
-        const modelTv = require("./tv");
-        return await modelTv.buscarTV(params.nome);
-    }
-    if (params.tipo == "musica") {
-        const modelMusica = require("./musicas");
-        return await modelMusica.buscarMusicas(params.nome);
-    }
-    if (params.tipo == "jogo") {
-        const modelJogo = require("./jogos");
-        return await modelJogo.buscarJogos(params.nome);
-    }
-}
 
-module.exports = {login, cadastro, add}
+
+module.exports = {login, cadastro}
