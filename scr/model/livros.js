@@ -23,7 +23,7 @@ const buscarLivros = async (nome) => {
         return { erro: "Erro ao buscar livros: ", error };
     }}
 
-buscarLivrosId = async (id) => {
+buscarId = async (id) => {
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
     const data = await response.json();
     data.volumeInfo.publishedDate = new Date(data.volumeInfo.publishedDate).toLocaleDateString("pt-BR");
@@ -34,7 +34,7 @@ const todos_livros = async () => {
     const liv = await livros.findAll()
     const todos_livros = [];
     for (let i = 0; i < liv.length; i++) {
-        const livro = await buscarLivrosId(liv[i].id);
+        const livro = await buscarId(liv[i].id);
          todos_livros.push(livro);
     }
 

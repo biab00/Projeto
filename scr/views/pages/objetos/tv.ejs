@@ -7,18 +7,37 @@
             <% if(tv.length > 0) { %>
                 <%for(let i = 0; i<tv.length; i++) { %>
                     <div class="item">
-                        <h3><%=tv[i].nome_tv%></h3>
-                        <h4><%=tv[i].anoTv%></h4>
-                        <h4><%=tv[i].categoria%></h4>
+                        <h3><%=tv[i].name%>: <%=tv[i].id%></h3>
+                        <% if(tv[i].poster_path) { %>
+                        <img src="https://image.tmdb.org/t/p/w500<%=tv[i].poster_path%>" height="300px" width="auto">
+                        <% } else { %>
+                            <img src="/img/nocapa.jpg" height="200px" width="auto">
+                        <% } %>
+                        <h4><%=tv[i].vote_average%>/10</h4>
+                        <% if (tv[i].genres) { %>
+                        <h4> Gênero: </h4>
+                            <%for(let e = 0; e<tv[i].genres.length; e++) { %>
+                                <li><%=tv[i].genres[e].name%></li>
+                            <%}%>
+                        <% } %> 
+                        <h4><%=tv[i].first_air_date%></h4>
+                        <h4><%=tv[i].origin_country%>-<%=tv[i].original_language%> (<%=tv[i].original_name%>)</h4>
+                        <h4><%=tv[i].number_of_episodes%></h4>
+                        </br>
+                        <div style="max-width: 70%; display: flex; justify-self: center;">
+                            <h4><%=tv[i].overview%></h4>
+                        </div>
+                    </br>
+                        <a href="/deleteTv/<%=tv[i].id%>"><button>Excluir da lista!</button></a>
                     </div>
                 <%}%>
                 <div class="recado">
-                    <h4>Quer adicionar outro volume? Vá em frente</h4>
+                    <h4>Quer adicionar outro titulo? Vá em frente</h4>
                     <a href="/add"><button style="width: 10vw;">CREATE</button></a>
                 </div>
             <%} else {%>
                 <div class="recado">
-                    <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de adicionar algum?</h1>
+                    <h1 style="text-align: center;">Nenhum volume na lista.. adicionar?</h1>
                     <a href="/add"><button style="width: 10vw;">CREATE</button></a>
                 </div>
                 <%}%>

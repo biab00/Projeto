@@ -74,6 +74,15 @@ const add = async (req, res) => {
     if (req.body.tipo == "tv") {
         const modelTv = require("../model/tv");
         const result = await modelTv.buscarTV(req.body.nome);
+        let todos = await modelTv.tv.findAll();
+        todos = todos.map(m => m.id);
+        for (let i = 0; i < result.length; i++){
+                    if (todos.includes(result[i].id)){
+                        result[i].adicionado = true;
+                    } else{
+                        result[i].adicionado = false;
+                    }
+            } 
         res.render("pages/consultas/tv", {result});
     }
     if (req.body.tipo == "jogo") {
