@@ -21,8 +21,13 @@
                         </audio>
                         
                         <% } %>
-                        
+                        <% if (result[i].adicionado == false) { %>
                         <a href="/addMusica/<%=result[i].id%>"><button>Adicionar a lista!</button></a>
+                    <% } else {%>
+                        <div>
+                            <p>Já adicionado à sua lista!</p>
+                        </div>
+                        <% } %>
                     </div>
                 <%}%>
                 <div class="recado">

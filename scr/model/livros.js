@@ -2,20 +2,11 @@ const db = require("../config/bd_sequelize");
 const sequelize= require("sequelize");
 
 const livros = db.define("Livros", {
-    titulo: {
-        type: sequelize.STRING(200),
+    id:{
+        type: sequelize.STRING,
         allowNull: false,
-    },
-    autor: {
-        type: sequelize.STRING(20),
-        allowNull: false,
-    },
-    descricao: {
-        type: sequelize.STRING(30),
-    },
-    isbn: {
-        type: sequelize.INTEGER,
-    },
+        primaryKey: true
+    }
 });
 
 livros.sync({ alter: true })
@@ -24,11 +15,41 @@ const buscarLivros = async (nome) => {
     try {
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${nome}`);
     const data = await response.json();
-    return data;
+    data.items.forEach(item => {
+        item.volumeInfo.publishedDate = new Date(item.volumeInfo.publishedDate).toLocaleDateString("pt-BR");
+    });
+    return data.items;
     } catch (error) {
         return { erro: "Erro ao buscar livros: ", error };
     }}
 
-const todos_livros = async () => livros.findAll()
+buscarLivrosId = async (id) => {
+    const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
+    const data = await response.json();
+    data.volumeInfo.publishedDate = new Date(data.volumeInfo.publishedDate).toLocaleDateString("pt-BR");
+    return data;
+}
 
-module.exports = {buscarLivros, todos_livros};
+const todos_livros = async () => {
+    const liv = await livros.findAll()
+    const todos_livros = [];
+    for (let i = 0; i < liv.length; i++) {
+        const livro = await buscarLivrosId(liv[i].id);
+         todos_livros.push(livro);
+    }
+
+    return todos_livros;
+}
+const add = async (id) => {
+    await livros.create({
+        id: id
+    })
+}
+
+const delet = async (id) => {
+    await livros.destroy({
+        where: { id: id }
+    })
+}
+
+module.exports = {buscarLivros, todos_livros, add, delet};

@@ -59,4 +59,11 @@ const add = async (id) => {
         id: id
     })
 }
-module.exports = {buscarMusicas, todas_musicas, add};
+
+const delet = async (id) => {
+    await musica.destroy({
+        where: { id: id }
+    })
+}
+
+module.exports = {buscarMusicas, todas_musicas, add, musica, delet};

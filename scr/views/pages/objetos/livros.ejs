@@ -7,14 +7,37 @@
             <% if(livros.length > 0) { %>
                 <%for(let i = 0; i<livros.length; i++) { %>
                     <div class="item">
-                        <h3><%=livros[i].titulo%></h3>
-                        <h4><%=livros[i].autor%></h4>
-                        <h4><%=livros[i].descricao%></h4>
-                        <h4><%=livros[i].isbn%></h4>
+                        <h3><%=livros[i].volumeInfo.title%>: <%=livros[i].id%></h3>
+                        <%if (livros[i].searchInfo) { %>
+                            <p>"<%=livros[i].searchInfo.textSnippet%>"</p>
+                        <% } %>
+                        <% if(livros[i].volumeInfo.imageLinks) { %>
+                        <img src="<%=livros[i].volumeInfo.imageLinks.thumbnail%>">
+                        <% } else { %>
+                            <img src="/img/nocapa.jpg" height="200px" width="auto">
+                        <% } %>
+                            <%for(let e = 0; e<livros[i].volumeInfo.authors.length; e++) { %>
+                                <li><%=livros[i].volumeInfo.authors[e]%></li>
+                            <%}%> 
+                        <h4><%=livros[i].volumeInfo.subTitle%></h4>
+                        <%if (livros[i].volumeInfo.categories) { %>
+                            <h4> Categorias: </h4>
+                            <%for(let e = 0; e<livros[i].volumeInfo.categories.length; e++) { %>
+                                <li><%=livros[i].volumeInfo.categories[e]%></li>
+                            <%}%> 
+                        <%}%>
+                        <h4><%=livros[i].volumeInfo.publisher%> - <%=livros[i].volumeInfo.publishedDate%></h4>
+                        <h4>pages: <%=livros[i].volumeInfo.pageCount%></h4>
+                        </br>
+                        <div style="max-width: 70%; display: flex; justify-self: center;">
+                            <h4><%=livros[i].volumeInfo.description%></h4>
+                        </div>
+                    </br>
+                        <a href="/deleteLivro/<%=livros[i].id%>"><button>Excluir da lista!</button></a>
                     </div>
                 <%}%>
                 <div class="recado">
-                    <h4>Quer adicionar outro volume? Vá em frente</h4>
+                    <h4>Adicionar novo livro??</h4>
                     <a href="/add"><button style="width: 10vw;">CREATE</button></a>
                 </div>
             <%} else {%>

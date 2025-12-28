@@ -50,6 +50,16 @@ const addMusica = async (req, res) => {
     await modelMusica.add(req.params.id)
     res.redirect("/musicas")
 }
+
+const addLivro = async (req, res) => {
+    await modelLivro.add(req.params.id)
+    res.redirect("/livros")
+}
+
+const addTv = async (req, res) => {
+    await modelTv.add(req.params.id)
+    res.redirect("/TV")
+}
 const musicas = async (req, res) => {;
     const musicas = await modelMusica.todas_musicas()
     res.render("pages/objetos/musica", {musicas}) 
@@ -59,7 +69,7 @@ const add = async (req, res) => {
     if (req.body.tipo == "livro") {
         const modelLivro = require("../model/livros");
         const result = await modelLivro.buscarLivros(req.body.nome);
-        res.render("pages/consultas/livro", {result});
+        res.render("pages/consultas/livros", {result});
     }
     if (req.body.tipo == "tv") {
         const modelTv = require("../model/tv");
@@ -74,7 +84,16 @@ const add = async (req, res) => {
     if (req.body.tipo == "musica") {
         const modelMusica = require("../model/musicas");
         const result = await modelMusica.buscarMusicas(req.body.nome);
-        res.render("pages/consultas/musica", {result});
+        let todos = await modelMusica.musica.findAll();
+        todos = todos.map(m => m.dataValues.id);
+        for (let i = 0; i < result.length; i++){
+                    if (todos.includes(result[i].id)){
+                        result[i].adicionado = true;
+                    } else{
+                        result[i].adicionado = false;
+                    }
+            } 
+        res.render("pages/consultas/musicas", {result});
     }
 }
 
@@ -83,4 +102,19 @@ const deleteJogo = async (req, res) => {
     res.redirect("/jogos")
 }
 
-module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica};
+const deleteMusica = async (req, res) => {
+    await modelMusica.delet(req.params.id)
+    res.redirect("/musicas")
+}
+
+const deleteLivro = async (req, res) => {
+    await modelLivro.delet(req.params.id)
+    res.redirect("/livros")
+}
+
+const deleteTV = async (req, res) => {
+    await modelTv.delet(req.params.id)
+    res.redirect("/TV")
+}
+
+module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV};

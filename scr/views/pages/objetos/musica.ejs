@@ -1,40 +1,56 @@
 <!DOCTYPE html>
 <html>
-    <%-include("../../partials/head_objetos")%>
+<%-include("../../partials/head_objetos")%>
+
     <body>
         <%- include("../../partials/navbar")%>
-        <main>
-            <% if(musicas.length > 0) { %>
-                <%for(let i = 0; i<musicas.length; i++) { %>
-                    <div class="item">
-                        <h3><%=musicas[i].title%>: <%=musicas[i].id%></h3>
-                        <h4><%=musicas[i].artist.name%></h4>
-                        <h4><%=musicas[i].album.title%></h4>
-                        <%if (musicas[i].album.cover) { %>
-                            <img src="<%=musicas[i].album.cover%>">
-                        <% } %>
-                        <h4><%=musicas[i].duration%> minutos</h4>
-                        <% if(musicas[i].preview) { %>
-                        <audio controls style="width:70%">
-                           <source src="<%=musicas[i].preview%>" type="audio/mp3">
-                           Não foi possível carregar o áudio.
-                        </audio>
-                        
-                        <% } %>
-                        
-                        <a href="/addMusica/<%=musicas[i].id%>"><button>Adicionar a lista!</button></a>
-                    </div>
-                <%}%>
-                <div class="recado">
-                    <h4>Não encontro o que procurava? Tente outra vez</h4>
-                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                </div>
-            <%} else {%>
-                <div class="recado">
-                    <h1 style="text-align: center;">Nenhum titulo encontrado, confira se digitou corretamente, ou ainda não o temos</h1>
-                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                </div>
-                <%}%>
-        </main>
+            <main>
+                <% if(musicas.length> 0) { %>
+                    <%for(let i=0; i<musicas.length; i++) { %>
+                        <div class="item">
+                            <h3>
+                                <%=musicas[i].title%>: <%=musicas[i].id%>
+                            </h3>
+                            <h4>
+                                <%=musicas[i].artist.name%>
+                            </h4>
+                            <h4>
+                                <%=musicas[i].album.title%>
+                            </h4>
+                            <%if (musicas[i].album.cover) { %>
+                                <img src="<%=musicas[i].album.cover%>">
+                                <% } %>
+                                    <h4>
+                                        <%=musicas[i].duration%> minutos
+                                    </h4>
+                                    <% if(musicas[i].preview) { %>
+                                        <audio controls style="width:70%">
+                                            <source src="<%=musicas[i].preview%>" type="audio/mp3">
+                                            Não foi possível carregar o áudio.
+                                        </audio>
+
+                                        <% } %>
+
+                                            <div>
+                                                <p>Alerta: Excluir um volume é uma ação irreversível.</p>
+                                            </div>
+
+                                            <a href="/deleteMusica/<%=musicas[i].id%>"><button>Excluir da
+                                                    lista!</button></a>
+                        </div>
+                        <%}%>
+                            <div class="recado">
+                                <h4>Não encontro o que procurava? Tente outra vez</h4>
+                                <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                            </div>
+                            <%} else {%>
+                                <div class="recado">
+                                    <h1 style="text-align: center;">Nenhum titulo encontrado, confira se digitou
+                                        corretamente, ou ainda não o temos</h1>
+                                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                                </div>
+                                <%}%>
+            </main>
     </body>
+
 </html>
