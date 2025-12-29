@@ -39,6 +39,10 @@ const login = async (params) => {
     return "usuario não encontrado";
 }
 
+const dicionario = {
+    Soap: "Novela",
+    Documentary: "Documentário",
+}
 
 
 

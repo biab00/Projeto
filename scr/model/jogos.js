@@ -1,14 +1,33 @@
 const bd = require("../config/bd_sequelize");
 const sequelize = require("sequelize");
 
-//libreTranslate
-async function traduzir(texto) {
-    const response = await fetch("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(texto) + "&langpair=en|pt");
-    const data = await response.json();
-    if(data.responseStatus !== 200){
-        return texto; // Retorna o texto original em caso de erro
+// helper: fetch with timeout
+async function fetchWithTimeout(url, options = {}, timeout = 8000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    options.signal = controller.signal;
+    try {
+        const res = await fetch(url, options);
+        clearTimeout(id);
+        return res;
+    } catch (err) {
+        clearTimeout(id);
+        throw err;
     }
-    return data.responseData.translatedText;
+}
+
+// libreTranslate
+async function traduzir(texto) {
+    try {
+        const response = await fetchWithTimeout("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(texto) + "&langpair=en|pt");
+        const data = await response.json();
+        if (data.responseStatus !== 200) {
+            return texto;
+        }
+        return data.responseData.translatedText;
+    } catch (err) {
+        return texto;
+    }
 }
 
 const jogos = bd.define("Jogos", {
@@ -36,7 +55,7 @@ jogos.sync({ alter: true })
 //API 
 
 const buscarId = async (id) => {
-    const response = await fetch("https://api.igdb.com/v4/games", {
+    const response = await fetchWithTimeout("https://api.igdb.com/v4/games", {
         method: "POST",
         headers: {
             "Client-ID": "gcrw5n4spp2ms1lr6t2rvdalidvgua",
@@ -55,7 +74,7 @@ const buscarId = async (id) => {
         if (jogo.involved_companies) {
             const desenvolvedores = [];
             for (let i = 0; i < jogo.involved_companies.length; i++) {
-            const desenvolvedor = await fetch("https://api.igdb.com/v4/involved_companies", {
+            const desenvolvedor = await fetchWithTimeout("https://api.igdb.com/v4/involved_companies", {
                 method: "POST",
                 headers: {
                     "Client-ID": "gcrw5n4spp2ms1lr6t2rvdalidvgua",
@@ -81,7 +100,7 @@ const buscarId = async (id) => {
 }
 
 const buscarJogos = async (nome_jogo) => {
-    const response = await fetch("https://api.igdb.com/v4/games", {
+    const response = await fetchWithTimeout("https://api.igdb.com/v4/games", {
         method: "POST",
         headers: {
             "Client-ID": "gcrw5n4spp2ms1lr6t2rvdalidvgua",
@@ -100,7 +119,7 @@ const buscarJogos = async (nome_jogo) => {
         if (jogo.involved_companies) {
             const desenvolvedores = [];
             for (let i = 0; i < jogo.involved_companies.length; i++) {
-            const desenvolvedor = await fetch("https://api.igdb.com/v4/involved_companies", {
+            const desenvolvedor = await fetchWithTimeout("https://api.igdb.com/v4/involved_companies", {
                 method: "POST",
                 headers: {
                     "Client-ID": "gcrw5n4spp2ms1lr6t2rvdalidvgua",

@@ -6,21 +6,47 @@ const tv = db.define("TV", {
       type: sequelize.INTEGER,
       primaryKey: true,
       allowNull: false
+  },
+  tipo: {
+    type: sequelize.STRING,
+    allowNull: false
   }
 });
 
 tv.sync({alter: true})
 
+async function fetchWithTimeout(url, options = {}, timeout = 8000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    options.signal = controller.signal;
+    try {
+        const res = await fetch(url, options);
+        clearTimeout(id);
+        return res;
+    } catch (err) {
+        clearTimeout(id);
+        throw err;
+    }
+}
+
 const buscarTV = async (nome) => {
     try{
-        const response = await fetch(`https://api.themoviedb.org/3/search/tv?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR&query=${nome}`);
+        const response = await fetchWithTimeout(`https://api.themoviedb.org/3/search/tv?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR&query=${nome}`);
         const data = await response.json();
         const todos_tv = [];
         for (let i = 0; i < data.results.length; i++) {
           const tv = await buscarId(data.results[i].id);
-          tv.vote_average = (data.results[i].vote_average).toFixed(1);
           todos_tv.push(tv);
         }
+        let todos = await tv.findAll();
+        todos = todos.map(m => m.id);
+        for (let i = 0; i < todos_tv.length; i++){
+                    if (todos.includes(todos_tv[i].id)){
+                        todos_tv[i].adicionado = true;
+                    } else{
+                        todos_tv[i].adicionado = false;
+                    }
+            }
         
         return todos_tv;
     } catch (error) {
@@ -30,9 +56,13 @@ const buscarTV = async (nome) => {
 
 
 buscarId = async (id) => {
-    const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR`);
+    const response = await fetchWithTimeout(`https://api.themoviedb.org/3/tv/${id}?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR`);
     const data = await response.json();
     data.first_air_date = new Date(data.first_air_date).toLocaleDateString("pt-BR");
+    data.last_air_date = new Date(data.last_air_date).toLocaleDateString("pt-BR");
+    for(let i=0; i<data.length; i++){
+        data[i].vote_average = (data[i].vote_average).toFixed(1);
+    };
     return data;
 }
 
@@ -40,15 +70,25 @@ const todos_tv = async () => {
     const tvs = await tv.findAll()
     const todos_tv = [];
     for (let i = 0; i < tvs.length; i++) {
-        const tv = await buscarId(tvs[i].id);
-         todos_tv.push(tv);
+        let tv;
+        if (tvs[i].tipo == "serie") {
+            tv = await buscarId(tvs[i].id);
+            tv.tipo = "serie";
+        } else {
+            tv = await buscarIdFilme(tvs[i].id);
+            tv.tipo = "filme";
+        } 
+        todos_tv.push(tv);
     }
-
+    for(let i=0; i<todos_tv.length; i++){
+        todos_tv[i].vote_average = (todos_tv[i].vote_average).toFixed(1);
+    };
     return todos_tv;
 }
-const add = async (id) => {
+const add = async (id, tipo) => {
     await tv.create({
-        id: id
+        id: id,
+        tipo: tipo
     })
 }
 
@@ -57,6 +97,41 @@ const delet = async (id) => {
         where: { id: id }
     })
 }
+const buscarIdFilme = async (id) => {
+    const response = await fetchWithTimeout(`https://api.themoviedb.org/3/movie/${id}?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR`);
+    const data = await response.json();
+    data.release_date = new Date(data.release_date).toLocaleDateString("pt-BR");
+    if (data.runtime>0){
+      data.runtime = `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}min`;
+    } else{
+      data.runtime = "Indefinido";
+    }
+    return data;
+}
 
+const buscarFilme = async (nome) => {
+    try{
+        const response = await fetchWithTimeout(`https://api.themoviedb.org/3/search/movie?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR&query=${nome}`);
+        const data = await response.json();
+        const todos_filmes = [];
+        for (let i = 0; i < data.results.length; i++) {
+          const filme = await buscarIdFilme(data.results[i].id);
+          todos_filmes.push(filme);
+        }
+        let todos = await tv.findAll();
+        todos = todos.map(m => m.id);
+        for (let i = 0; i < todos_filmes.length; i++){
+                    if (todos.includes(todos_filmes[i].id)){
+                        todos_filmes[i].adicionado = true;
+                    } else{
+                        todos_filmes[i].adicionado = false;
+                    }
+            }
+        
+        return todos_filmes;
+    } catch (error) {
+        return {erro: "Erro ao buscar titulo:", error};
+    }
+}
 
-module.exports = {buscarTV, todos_tv, add, delet, tv};
+module.exports = {buscarTV, buscarFilme, todos_tv, add, delet};

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
 <html>
-
-<head>
-</head>
-
+    <%-include("../partials/head")%>
 <body>
+    <main>
+         <%- include("../partials/navbar")%>
     <a href="/inicio" style="justify-self: flex-start; align-self: flex-start; width:15vw"> <button>Voltar</button> </a>
     <form action="/mostrarItem" method="POST">
         <select id="select" name="tipo">
@@ -17,20 +16,37 @@
         </select>
         </br>
         <div id="div">
+            <div class="tv" style="display: none; align-items: center;">
+             <label>
+                Série <input id="radio" type="radio" name="tipo_tv" value="serie" required>
+             </label>
+            <label>
+                Filme <input type="radio"name="tipo_tv" value="filme" width="60%">
+            </label>
+        </br>
+         </div>
             Nome da Obra: <input type="text" name="nome" required> 
             <button type="submit">Enviar</button>
         </div>
        
     </form>
+    </main>
 </body>
-
 </html>
-
 <script>
     const select = document.querySelector("#select");
 
     select.addEventListener("change", () => {
         document.querySelector("#div").style.display = "flex";
+        if (select.value === "tv") {
+            document.querySelector(".tv").style.display = "flex"
+            document.querySelector("#radio").required = true;
+        }
+        else{
+            document.querySelector(".tv").style.display = "none"
+            document.querySelector("#radio").required = false;
+
+        }
     });
 </script>
 

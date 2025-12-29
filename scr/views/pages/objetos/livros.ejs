@@ -33,6 +33,9 @@
                             <h4><%=livros[i].volumeInfo.description%></h4>
                         </div>
                     </br>
+                    <div>
+                        <p>ALERTA: Excluir um volume é uma ação irreversível.</p>
+                    </div>
                         <a href="/deleteLivro/<%=livros[i].id%>"><button>Excluir da lista!</button></a>
                     </div>
                 <%}%>

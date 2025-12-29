@@ -1,46 +1,128 @@
 <!DOCTYPE html>
 <html>
-    <%-include("../../partials/head_objetos")%>
+<%-include("../../partials/head_objetos")%>
+
     <body>
         <%- include("../../partials/navbar")%>
-        <main>
-            <% if(tv.length > 0) { %>
-                <%for(let i = 0; i<tv.length; i++) { %>
-                    <div class="item">
-                        <h3><%=tv[i].name%>: <%=tv[i].id%></h3>
-                        <% if(tv[i].poster_path) { %>
-                        <img src="https://image.tmdb.org/t/p/w500<%=tv[i].poster_path%>" height="300px" width="auto">
-                        <% } else { %>
-                            <img src="/img/nocapa.jpg" height="200px" width="auto">
-                        <% } %>
-                        <h4><%=tv[i].vote_average%>/10</h4>
-                        <% if (tv[i].genres) { %>
-                        <h4> Gênero: </h4>
-                            <%for(let e = 0; e<tv[i].genres.length; e++) { %>
-                                <li><%=tv[i].genres[e].name%></li>
-                            <%}%>
+            <main>
+                <% if(tv.length> 0) { %>
+                    <%for(let i=0; i<tv.length; i++) { %>
+                        <% if (tv[i].tipo=="serie" ) {%>
+                            <div class="item">
+                                <h3><%=tv[i].name%>: <%=tv[i].id%></h3>
+                                <h5><%=tv[i].tagline%></h5>
+                                <% if(tv[i].poster_path) { %>
+                                <img src="https://image.tmdb.org/t/p/w500<%=tv[i].poster_path%>" height="300px" width="auto">
+                                <% } else { %>
+                                    <img src="/img/nocapa.jpg" height="200px" width="auto">
+                                <% } %>
+                                <h4><%=tv[i].vote_average%>/10</h4>
+                                <% if (tv[i].genres) { %>
+                                <h4> Gênero: </h4>
+                                    <%for(let e = 0; e<tv[i].genres.length; e++) { %>
+                                        <li><%=tv[i].genres[e].name%></li>
+                                    <%}%>
+                                <% } %> 
+                                <% if(tv[i].production_companies) { %>
+                                <h4> Produtores: </h4>
+                                    <%for(let e = 0; e<tv[i].production_companies.length; e++) { %>
+                                        <li><%=tv[i].production_companies[e].name%></li>
+                                    <%}%>
+                                <% } %> 
+                                <% if(tv[i].created_by) { %>
+                                <h4>Criado por: </h4>
+                                    <% for(let e = 0; e<tv[i].created_by.length; e++) {%>
+                                        <li><%=tv[i].created_by[e].name%></li>
+                                <% } %> 
+                                <% } %>
+                                <% if (tv[i].networks) {%>
+                                    <h4>Disponível em: </h4>
+                                    <% for (let e = 0; e < tv[i].networks.length; e++) { %>
+                                        <li><%=tv[i].networks[e].name%></li>
+                                    <% } %>
+                                <% } %>
+                                    </br>
+                                <h4>★<%=tv[i].first_air_date%> - ✞<%=tv[i].last_air_date%></h4>
+                                <h4><%=tv[i].origin_country%>-<%=tv[i].original_language%> (<%=tv[i].original_name%>)</h4>
+                                <h4>Episódios: <%=tv[i].number_of_episodes%></h4>
+                                <h4>Temporadas: <%=tv[i].number_of_seasons%></h4>
+                                <% if(tv[i].episode_run_time) { %>
+                                    <h4>Tempo estimado dos episódios: <%=tv[i].episode_run_time%> min</h4>
+                                <% } %>
+                                </br>
+                                <div style="max-width: 70%; display: flex; justify-self: center;">
+                                    <h4><%=tv[i].overview%></h4>
+                                </div>
+                            </br>
+                                <a href="/deleteTv/<%=tv[i].id%>"><button>Excluir da lista!</button></a>
+                            </div>
+                        <%} else if(tv[i].tipo=="filme" ) {%>
+                            <div class="item">
+                                <h3>
+                                    <%=tv[i].title%>: <%=tv[i].id%>
+                                </h3>
+                                <% if(tv[i].poster_path) { %>
+                                    <img src="https://image.tmdb.org/t/p/w500<%=tv[i].poster_path%>"
+                                        height="300px" width="auto">
+                                    <% } else { %>
+                                        <img src="/img/nocapa.jpg" height="200px" width="auto">
+                                        <% } %>
+                                    <h4>
+                                        <%=tv[i].runtime%>
+                                    </h4>
+                                    <% if(tv[i].vote_average > 0) { %>
+                                            <h4>
+                                                <%=tv[i].vote_average%>/10
+                                            </h4>
+                                    <% } %>
+                                    <% if (tv[i].genres) { %>
+                                        <h4> Gênero: </h4>
+                                        <%for(let e=0; e<tv[i].genres.length; e++) { %>
+                                            <li>
+                                                <%=tv[i].genres[e].name%>
+                                            </li>
+                                        <%}%>
+                                    <% } %>
+                                    <% if (tv[i].production_companies) { %>
+                                        <h4> Produtores: </h4>
+                                        <%for(let e=0; e<tv[i].production_companies.length; e++) { %>
+                                            <li>
+                                                <%=tv[i].production_companies[e].name%>
+                                            </li>
+                                            <%}%>
+                                        <% } %>
+                                        <h4>
+                                            <%=tv[i].release_date%>
+                                        </h4>
+                                        <h4>
+                                            <%=tv[i].origin_country%> - <%=tv[i].original_language%> (<%=tv[i].original_title%>)
+                                        </h4>
+                                    </br>
+                                        <div
+                                            style="max-width: 70%; display: flex; justify-self: center;">
+                                            <h4>
+                                                <%=tv[i].overview%>
+                                            </h4>
+                                        </div>
+                                    </br>
+                                    <div>
+                                        <p>ALERTA: Excluir um volume é uma ação irreversível.</p>
+                                    </div>
+                                        <a href="/deleteTv/<%=tv[i].id%>"><button>Excluir da lista!</button></a>
+                            </div>
                         <% } %> 
-                        <h4><%=tv[i].first_air_date%></h4>
-                        <h4><%=tv[i].origin_country%>-<%=tv[i].original_language%> (<%=tv[i].original_name%>)</h4>
-                        <h4><%=tv[i].number_of_episodes%></h4>
-                        </br>
-                        <div style="max-width: 70%; display: flex; justify-self: center;">
-                            <h4><%=tv[i].overview%></h4>
-                        </div>
-                    </br>
-                        <a href="/deleteTv/<%=tv[i].id%>"><button>Excluir da lista!</button></a>
+                    <% } %>
+                    <div class="recado">
+                        <h4>Quer adicionar outro titulo? Vá em frente</h4>
+                        <a href="/add"><button style="width: 10vw;">CREATE</button></a>
                     </div>
-                <%}%>
-                <div class="recado">
-                    <h4>Quer adicionar outro titulo? Vá em frente</h4>
-                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                </div>
-            <%} else {%>
-                <div class="recado">
-                    <h1 style="text-align: center;">Nenhum volume na lista.. adicionar?</h1>
-                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                </div>
-                <%}%>
-        </main>
+                   <%} else { %>
+                        <div class="recado">
+                            <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de adicionar algum?</h1>
+                            <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                        </div>
+                        <% } %>
+            </main>
     </body>
+
 </html>

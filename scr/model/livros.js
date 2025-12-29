@@ -11,17 +11,37 @@ const livros = db.define("Livros", {
 
 livros.sync({ alter: true })
 
+async function fetchWithTimeout(url, options = {}, timeout = 8000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    options.signal = controller.signal;
+    try {
+        const res = await fetch(url, options);
+        clearTimeout(id);
+        return res;
+    } catch (err) {
+        clearTimeout(id);
+        throw err;
+    }
+}
+
 const buscarLivros = async (nome) => {
     try {
-    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${nome}`);
-    const data = await response.json();
-    data.items.forEach(item => {
-        item.volumeInfo.publishedDate = new Date(item.volumeInfo.publishedDate).toLocaleDateString("pt-BR");
-    });
-    return data.items;
+        const response = await fetchWithTimeout(`https://www.googleapis.com/books/v1/volumes?q=${nome}`);
+        const data = await response.json();
+        if (data.items) {
+            data.items.forEach(item => {
+                if (item.volumeInfo && item.volumeInfo.publishedDate) {
+                    item.volumeInfo.publishedDate = new Date(item.volumeInfo.publishedDate).toLocaleDateString("pt-BR");
+                }
+            });
+            return data.items;
+        }
+        return [];
     } catch (error) {
         return { erro: "Erro ao buscar livros: ", error };
-    }}
+    }
+}
 
 buscarId = async (id) => {
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);

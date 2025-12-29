@@ -2,6 +2,20 @@ const bd = require("../config/bd_sequelize");
 const sequelize = require("sequelize"); 
 const fetch2 = require("node-fetch");
 
+async function fetchWithTimeout(url, options = {}, timeout = 8000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    options.signal = controller.signal;
+    try {
+        const res = await fetch(url, options);
+        clearTimeout(id);
+        return res;
+    } catch (err) {
+        clearTimeout(id);
+        throw err;
+    }
+}
+
 
 const musica = bd.define("Musica", {
     id: {
@@ -24,7 +38,7 @@ musica.sync({ alter: true })
 
 const buscarMusicas = async (nome_musica) => {
     try{
-        const response = await fetch(`https://api.deezer.com/search?q=${nome_musica}`);
+        const response = await fetchWithTimeout(`https://api.deezer.com/search?q=${nome_musica}`);
         const data = await response.json();
         for(let i = 0; i < data.data.length; i++){
         const audio = (data.data[i].duration / 60).toFixed(2);
@@ -37,7 +51,7 @@ const buscarMusicas = async (nome_musica) => {
 }
 
 const buscarMusicasId = async (id) => {
-        const response = await fetch(`https://api.deezer.com/track/${id}`);
+        const response = await fetchWithTimeout(`https://api.deezer.com/track/${id}`);
         const data = await response.json();
         const audio = (data.duration / 60).toFixed(1);
         data.duration = audio;
