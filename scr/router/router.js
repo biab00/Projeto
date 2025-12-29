@@ -19,6 +19,7 @@ rota.get("/jogos", controller.jogos);
 rota.get("/TV", controller.tv);
 rota.get("/calendario", controller.datas);
 rota.get("/musicas", controller.musicas);
+rota.get("/musicos/:id", controller.musicos);
 rota.post("/mostrarItem", controller.add)
 
 //Adicionar itens

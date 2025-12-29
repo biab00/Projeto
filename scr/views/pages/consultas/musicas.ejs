@@ -8,12 +8,22 @@
                 <%for(let i = 0; i<result.length; i++) { %>
                     <div class="item">
                         <h3><%=result[i].title%>: <%=result[i].id%></h3>
-                        <h4><%=result[i].artist.name%></h4>
+                        <div id="top">
+                            <% if(result[i].top) {%>
+                                <h4>Top <%=result[i].top%> do Artista em <%=result[i].available_countries%> países </h4>
+                            <% } else {%>
+                                <h4>Hit do artista em <%=result[i].available_countries%> países</h4>
+                            <% } %>
+                        </div>
+                        <% for(let e = 0; e<result[i].contributors.length;e++) {%>
+                            <a href="/musicos/<%=result[i].contributors[e].id%>" style="color: black;"><%=result[i].contributors[e].name%>;</a>
+                        <% } %>
+                        <h4><%=result[i].release_date%></h4>
                         <h4><%=result[i].album.title%></h4>
                         <%if (result[i].album.cover) { %>
                             <img src="<%=result[i].album.cover%>">
                         <% } %>
-                        <h4><%=result[i].duration%> minutos</h4>
+                        <h4><%=result[i].duration%></h4>
                         <% if(result[i].preview) { %>
                         <audio controls style="width:70%">
                            <source src="<%=result[i].preview%>" type="audio/mp3">
@@ -36,6 +46,7 @@
                 </div>
             <%} else {%>
                 <div class="recado">
+                    <p><%=result.erro %></p>
                     <h1 style="text-align: center;">Nenhum titulo encontrado, confira se digitou corretamente, ou ainda não o temos</h1>
                     <a href="/add"><button style="width: 10vw;">CREATE</button></a>
                 </div>

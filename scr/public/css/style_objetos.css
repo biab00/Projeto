@@ -34,3 +34,19 @@ main{
     min-height: 20%;
     min-width: 20%;
 }
+
+#top{
+    background-color: white;
+    color: black;
+    border: 0.2rem solid black;
+    border-radius: 50%;
+    content: auto;
+    width: 10vw;
+    height: 12vh;
+    display: flex;
+    justify-self: center;
+    padding: 3vw;
+    text-size-adjust: auto;
+    text-align: center;
+    align-items: center;
+}

@@ -11,23 +11,9 @@ const livros = db.define("Livros", {
 
 livros.sync({ alter: true })
 
-async function fetchWithTimeout(url, options = {}, timeout = 8000) {
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
-    options.signal = controller.signal;
-    try {
-        const res = await fetch(url, options);
-        clearTimeout(id);
-        return res;
-    } catch (err) {
-        clearTimeout(id);
-        throw err;
-    }
-}
-
 const buscarLivros = async (nome) => {
     try {
-        const response = await fetchWithTimeout(`https://www.googleapis.com/books/v1/volumes?q=${nome}`);
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${nome}`);
         const data = await response.json();
         if (data.items) {
             data.items.forEach(item => {

@@ -42,8 +42,20 @@ const login = async (params) => {
 const dicionario = {
     Soap: "Novela",
     Documentary: "Documentário",
+    Adventure: "Aventura",
+    Animation: "Animação",
+    Comedy: "Comédia",
+    Action: "Ação",
+    Family: "Para Família",
+    Horror: "Terror",
+    Mystery: "Mistério",
+    SciFic: "Ficção Científica",
+    Thriller: "Suspense",
+    TV_Movie: "Seriado de TV",
+    War: "Guerra",
+    Western: "Faroeste"
 }
 
 
 
-module.exports = {login, cadastro}
+module.exports = {login, cadastro, dicionario}

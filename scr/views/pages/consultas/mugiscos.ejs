@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <%-include("../../partials/head_objetos")%>
+    <body>
+        <%- include("../../partials/navbar")%>
+        <main>
+            <a href="/inicio" style="justify-self: flex-start; align-self: flex-start; width:15vw"> <button>Voltar</button> </a>
+                    <div class="item">
+                        <h3><%=musicos.name%>: <%=musicos.id%></h3>
+                        <img id="top" style="padding: 0vw; width: 16vw; height: 16vh;" src="<%=musicos.picture%>">
+                        <h4>Veja só! Teu artista possui <span style="color: blueviolet"> <%=musicos.nb_album%> </span> álbuns registrados</h4>
+                        <h4>Além disso, possui <span style="color:blueviolet"> <%=musicos.nb_fan%> </span> fãs no Deezer!</h4>
+
+                        <h3>TOP 10</h3>
+                        <ol>
+                            <%for(let i = 0; i<10; i++) {%>
+                            <li>
+                                <%=musicas[i].title%> : <span style="color: green"><%=musicas[i].release_date%></span>
+                            </li>
+                            <% } %>
+                        </ol>
+                    </div>
+        </main>
+    </body>
+</html>

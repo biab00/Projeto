@@ -15,23 +15,9 @@ const tv = db.define("TV", {
 
 tv.sync({alter: true})
 
-async function fetchWithTimeout(url, options = {}, timeout = 8000) {
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
-    options.signal = controller.signal;
-    try {
-        const res = await fetch(url, options);
-        clearTimeout(id);
-        return res;
-    } catch (err) {
-        clearTimeout(id);
-        throw err;
-    }
-}
-
 const buscarTV = async (nome) => {
     try{
-        const response = await fetchWithTimeout(`https://api.themoviedb.org/3/search/tv?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR&query=${nome}`);
+        const response = await fetch(`https://api.themoviedb.org/3/search/tv?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR&query=${nome}`);
         const data = await response.json();
         const todos_tv = [];
         for (let i = 0; i < data.results.length; i++) {
@@ -111,7 +97,7 @@ const buscarIdFilme = async (id) => {
 
 const buscarFilme = async (nome) => {
     try{
-        const response = await fetchWithTimeout(`https://api.themoviedb.org/3/search/movie?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR&query=${nome}`);
+        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR&query=${nome}`);
         const data = await response.json();
         const todos_filmes = [];
         for (let i = 0; i < data.results.length; i++) {

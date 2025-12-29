@@ -1,21 +1,6 @@
 const bd = require("../config/bd_sequelize");
 const sequelize = require("sequelize");
 
-// helper: fetch with timeout
-async function fetchWithTimeout(url, options = {}, timeout = 8000) {
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
-    options.signal = controller.signal;
-    try {
-        const res = await fetch(url, options);
-        clearTimeout(id);
-        return res;
-    } catch (err) {
-        clearTimeout(id);
-        throw err;
-    }
-}
-
 // libreTranslate
 async function traduzir(texto) {
     try {
