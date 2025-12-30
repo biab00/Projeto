@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html>
+
+    <!--VERSAO-->
+    <script>
+        const server = require("../../server")
+        let versao = server.versao
+
+        setInterval(async () => {
+            const res = await fetch("/api/verificar")
+            const data = await res.json()
+
+            if (data.versao !== versao) {
+                versao = data.versao
+                location.reload();
+            }
+        }, 3000)
+    </script>
+
+
     <%-include("../../partials/head_objetos")%>
     <body>
+        <%- include("../../partials/navbar")%>
         <header>
             <h1>Nosso Chat</h1>
             <h3>(que não é o GPT)</h3>
             <img src="/img/favicon.ico" height="100%">
         </header>
         <main>
-            <%- include("../../partials/navbar")%> 
+             
             <div id="tela">
                 <div id="tela_interna">
                 <%for(let i = 0; i<result.length; i++) {%>
@@ -29,7 +48,7 @@
                 </div>
                 <form action="/mandarsms" method="POST" id="mandar"> 
                     <input placeholder="Digite a nova mensagem" name="mensagem" class="mens">
-                    <input hidden name="user" value="Juju">
+                    <input hidden name="user" value="<%=result.remetente%>">
                     <button type="submit" id="enviar"> > </button>
                 </form>
             </div>

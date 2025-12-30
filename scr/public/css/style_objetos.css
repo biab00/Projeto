@@ -84,6 +84,7 @@ header{
     height: 100%;
     border-radius: 50%;
     width: 8%;
+    pointer-events: pointer;
 }
 
 #mandar{

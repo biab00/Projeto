@@ -35,5 +35,10 @@ const todos_chat = async () => {
     return total;
 }
 
+const delet = async (id) => await chat.destroy({
+    where: {
+        id: id
+    }
+})
 
-module.exports = {todos_chat, add}
+module.exports = {todos_chat, add, delet}
