@@ -5,6 +5,7 @@ const modelLivro = require("../model/livros");
 const modelJogo = require("../model/jogos");
 const modelMusica = require("../model/musicas");
 const modelTv = require("../model/tv");
+const modelChat = require("../model/chat");
 
 
 //BÁSICO
@@ -20,8 +21,17 @@ const cadastro = async (req, res) => {
 
 const login = async (req, res) => {
     const result = await model.login(req.body);
-    if (result == 1) res.redirect("/inicio");
-    else res.send(result)
+    if (result == 1) {
+        res.redirect("/inicio");
+    }
+    else {
+        res.send(result)
+    }
+}
+
+const addChat = async (req, res) => {
+    await modelChat.add(req.body.mensagem,req.body.user)
+    res.redirect("/chat")
 }
 
 const add = async (req, res) => {
@@ -151,5 +161,19 @@ const musicos = async (req, res) => {;
     res.render("pages/consultas/mugiscos", {musicos, musicas}) 
 }
 
+//Chat 
+const chat = async (req, res) => {
+    const result = await modelChat.todos_chat();
+    const cores = []
+    for(let i = 0; i<result.length; i++) {
+        const cor = model.cor_aleatorio()
+        cores.push(cor)
+        if(result[i].usuario == "Juju"){
+            result[i].usuario = "Euu"
+        }
+    }
+    
+    res.render("pages/objetos/chat", { result, cores });
+}
 
-module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos};
+module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat};

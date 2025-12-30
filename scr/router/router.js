@@ -8,6 +8,7 @@ rota.get("/", controller.inicio);
 rota.get("/inicio", (req, res) => {res.render("pages/PaginaInicial")})
 rota.get("/login", (req, res) => res.render("pages/login"));
 rota.get("/cadastro", (req, res) => res.render("pages/cadastro"));
+rota.get("/chat", controller.chat);
 
 rota.post("/login", controller.login);
 rota.post("/cadastro", controller.cadastro);
@@ -34,6 +35,9 @@ rota.get("/deleteJogo/:id", controller.deleteJogo)
 rota.get("/deleteMusica/:id", controller.deleteMusica)
 rota.get("/deleteLivro/:id", controller.deleteLivro)
 rota.get("/deleteTV/:id", controller.deleteTV)
+
+//Chat 
+rota.post("/mandarsms", controller.addChat)
 
 //Buscar itens
 rota.get("/buscar/jogo/:nome", async (req, res) => {

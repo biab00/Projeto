@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <%-include("../../partials/head_objetos")%>
+    <body>
+        <header>
+            <h1>Nosso Chat</h1>
+            <h3>(que não é o GPT)</h3>
+            <img src="/img/favicon.ico" height="100%">
+        </header>
+        <main>
+            <%- include("../../partials/navbar")%> 
+            <div id="tela">
+                <div id="tela_interna">
+                <%for(let i = 0; i<result.length; i++) {%>
+                <% if (result[i].usuario == "Euu") { %>
+                    <div class="mensagem" style="background-color: rgb(87, 245, 245); display: flex; align-self: flex-end;">
+                        <p style="color: black; display: flex; align-self: flex-end; align-content: flex-end;" ><%=result[i].usuario%></p>
+                        <p><%=result[i].mensagem %></p>
+                        <p style="text-size-adjust: 1%; color: gray; display: flex; align-self: flex-start;"><%=result[i].hora%></p>
+                    </div>
+                <% } else { %>
+                    <div class="mensagem">
+                        <p style="color: <%=(cores[i])%>; display: flex; align-self: flex-end;" ><%=result[i].usuario%></p>
+                        <p><%=result[i].mensagem %></p>
+                        <p style="text-size-adjust: 1%; color: gray; display: flex; align-self: flex-start;"><%=result[i].hora%></p>
+                    </div>
+                <% } %>
+                <% } %>
+                </div>
+                <form action="/mandarsms" method="POST" id="mandar"> 
+                    <input placeholder="Digite a nova mensagem" name="mensagem" class="mens">
+                    <input hidden name="user" value="Juju">
+                    <button type="submit" id="enviar"> > </button>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

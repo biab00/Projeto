@@ -33,8 +33,11 @@ const cadastro = async (params) => {
 const login = async (params) => {
     const user = await cadastros.findOne({where: {username: params.username}});
     if (user) {
-        if (bcrypt.compare(params.senha, user.senha_cripto)) return 1; 
-        else return "senha incorreta"
+        if (await bcrypt.compare(params.senha, user.senha_cripto)) {
+            return 1;
+        } else {
+            return "senha incorreta"
+            }
     }
     return "usuario não encontrado";
 }
@@ -56,6 +59,11 @@ const dicionario = {
     Western: "Faroeste"
 }
 
+const cor_aleatorio = () => {
+    const r = Math.floor(Math.random() * 150)
+    const g = Math.floor(Math.random() * 150)
+    const b = Math.floor(Math.random() * 150)
+    return `rgb(${r}, ${g}, ${b})`
+}
 
-
-module.exports = {login, cadastro, dicionario}
+module.exports = {login, cadastro, dicionario, cor_aleatorio}
