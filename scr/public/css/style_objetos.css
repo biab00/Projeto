@@ -65,16 +65,16 @@ header{
     border: double 0.5rem black;
     background-color: aliceblue;
     min-height: 90%;
-    width: 80%;
+    width: 60%;
     margin-top: 3%;
     margin-bottom: 3%;
 }
 
 #tela_interna{
-    min-height: 100%;
     display: flex;
     flex-direction: column;
     padding: 1%;
+    min-height: 80vh;
     gap: 5px;
 }
 
@@ -84,7 +84,7 @@ header{
     height: 100%;
     border-radius: 50%;
     width: 8%;
-    pointer-events: pointer;
+    cursor: pointer;
 }
 
 #mandar{
@@ -93,7 +93,9 @@ header{
     background-color:rgb(199, 242, 242);
     display: flex;
     align-items: center;
-    margin-top: auto;
+    justify-self: flex-end;
+    top: auto;
+    bottom: 0;
     border-top: solid 0.2rem cadetblue;
     gap: 5px
 }
@@ -114,3 +116,49 @@ header{
     align-items: center;
     flex-direction: column;
 }
+
+/*MODAL!!!*/
+ .modal-fundo {
+    display:flex;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .modal-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: aliceblue;
+    margin: 15% auto;
+    padding: 30px;
+    z-index: 2;
+    border-radius: 10px;
+    border: 3px solid #888;
+    width: 60%;
+    gap: 15px;
+    height: 40%;;
+  }
+
+  .fechar {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .fechar:hover,
+  .fechar:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }

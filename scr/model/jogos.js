@@ -4,7 +4,7 @@ const sequelize = require("sequelize");
 // libreTranslate
 async function traduzir(texto) {
     try {
-        const response = await fetchWithTimeout("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(texto) + "&langpair=en|pt");
+        const response = await fetch("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(texto) + "&langpair=en|pt");
         const data = await response.json();
         if (data.responseStatus !== 200) {
             return texto;
@@ -40,7 +40,7 @@ jogos.sync({ alter: true })
 //API 
 
 const buscarId = async (id) => {
-    const response = await fetchWithTimeout("https://api.igdb.com/v4/games", {
+    const response = await fetch("https://api.igdb.com/v4/games", {
         method: "POST",
         headers: {
             "Client-ID": "gcrw5n4spp2ms1lr6t2rvdalidvgua",
@@ -59,7 +59,7 @@ const buscarId = async (id) => {
         if (jogo.involved_companies) {
             const desenvolvedores = [];
             for (let i = 0; i < jogo.involved_companies.length; i++) {
-            const desenvolvedor = await fetchWithTimeout("https://api.igdb.com/v4/involved_companies", {
+            const desenvolvedor = await fetch("https://api.igdb.com/v4/involved_companies", {
                 method: "POST",
                 headers: {
                     "Client-ID": "gcrw5n4spp2ms1lr6t2rvdalidvgua",
@@ -85,7 +85,7 @@ const buscarId = async (id) => {
 }
 
 const buscarJogos = async (nome_jogo) => {
-    const response = await fetchWithTimeout("https://api.igdb.com/v4/games", {
+    const response = await fetch("https://api.igdb.com/v4/games", {
         method: "POST",
         headers: {
             "Client-ID": "gcrw5n4spp2ms1lr6t2rvdalidvgua",
@@ -104,7 +104,7 @@ const buscarJogos = async (nome_jogo) => {
         if (jogo.involved_companies) {
             const desenvolvedores = [];
             for (let i = 0; i < jogo.involved_companies.length; i++) {
-            const desenvolvedor = await fetchWithTimeout("https://api.igdb.com/v4/involved_companies", {
+            const desenvolvedor = await fetch("https://api.igdb.com/v4/involved_companies", {
                 method: "POST",
                 headers: {
                     "Client-ID": "gcrw5n4spp2ms1lr6t2rvdalidvgua",

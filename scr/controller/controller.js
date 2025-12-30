@@ -162,18 +162,35 @@ const musicos = async (req, res) => {;
 //Chat 
 const chat = async (req, res) => {
     const result = await modelChat.todos_chat();
+    let nomes = []
     const cores = []
     for(let i = 0; i<result.length; i++) {
-        const cor = model.cor_aleatorio()
-        cores.push(cor)
+        
+        nomes.push(result[i].usuario)
+        
+        nomes = Array.from(new Set(nomes))
+        
+        for(let c = 0; c<nomes.length; c++){
+            const cor = model.cor_aleatorio()
+            cores.push(cor)
+            if(result[i].usuario == nomes[c]){
+                result[i].cor = cores[c]
+            }
+        }
+
         if(result[i].usuario == req.session.username){
             result[i].usuario = "Euu"
         }
     }
+    
 
     result.remetente = req.session.username
-    
-    res.render("pages/objetos/chat", { result, cores });
+    if(req.session.username){
+        res.render("pages/objetos/chat", { result });
+    }
+    else{
+        res.redirect("/login")
+    }
 }
 
 const addChat = async (req, res) => {
@@ -183,5 +200,9 @@ const addChat = async (req, res) => {
     res.redirect("/chat")
 }
 
+const deletChat = async(req, res) => {
+    await modelChat.delet()
+    res.redirect("/chat")
+}
 
-module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat};
+module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat};

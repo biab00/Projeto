@@ -6,7 +6,7 @@ const rota = express.Router()
 //Iniciais
 rota.get("/", controller.inicio);
 rota.get("/inicio", (req, res) => {res.render("pages/PaginaInicial")})
-rota.get("/login", (req, res) => res.render("pages/login"));
+rota.get("/login", (req, res) => res.render("pages/home"));
 rota.get("/cadastro", (req, res) => res.render("pages/cadastro"));
 rota.get("/chat", controller.chat);
 
@@ -38,6 +38,7 @@ rota.get("/deleteTV/:id", controller.deleteTV)
 
 //Chat 
 rota.post("/mandarsms", controller.addChat)
+rota.get("/deleteChat", controller.deletChat)
 
 //Buscar itens
 rota.get("/buscar/jogo/:nome", async (req, res) => {

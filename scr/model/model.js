@@ -60,9 +60,9 @@ const dicionario = {
 }
 
 const cor_aleatorio = () => {
-    const r = Math.floor(Math.random() * 150)
-    const g = Math.floor(Math.random() * 150)
-    const b = Math.floor(Math.random() * 150)
+    const r = Math.floor(Math.random() * 200)
+    const g = Math.floor(Math.random() * 220)
+    const b = Math.floor(Math.random() * 200)
     return `rgb(${r}, ${g}, ${b})`
 }
 

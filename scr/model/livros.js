@@ -29,19 +29,27 @@ const buscarLivros = async (nome) => {
     }
 }
 
-buscarId = async (id) => {
-    const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
-    const data = await response.json();
-    data.volumeInfo.publishedDate = new Date(data.volumeInfo.publishedDate).toLocaleDateString("pt-BR");
-    return data;
+buscarIdLiv = async (id) => {
+    try{
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
+        const data = await response.json();
+        for(let i = 0; i<data.length; i++) {
+            data[i].volumeInfo.publishedDate = new Date(data.volumeInfo.publishedDate).toLocaleDateString("pt-BR");
+        }
+        return data;
+    } catch (error) {
+        return { erro: error };
+    }
 }
 
 const todos_livros = async () => {
     const liv = await livros.findAll()
     const todos_livros = [];
     for (let i = 0; i < liv.length; i++) {
-        const livro = await buscarId(liv[i].id);
-         todos_livros.push(livro);
+        const id = liv[i].dataValues.id
+        console.log(id)
+        const livro = await buscarIdLiv(id);
+        todos_livros.push(livro);
     }
 
     return todos_livros;

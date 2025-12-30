@@ -41,8 +41,8 @@ const buscarTV = async (nome) => {
 }
 
 
-buscarId = async (id) => {
-    const response = await fetchWithTimeout(`https://api.themoviedb.org/3/tv/${id}?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR`);
+const buscarIdtv = async (id) => {
+    const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR`);
     const data = await response.json();
     data.first_air_date = new Date(data.first_air_date).toLocaleDateString("pt-BR");
     data.last_air_date = new Date(data.last_air_date).toLocaleDateString("pt-BR");
@@ -58,7 +58,7 @@ const todos_tv = async () => {
     for (let i = 0; i < tvs.length; i++) {
         let tv;
         if (tvs[i].tipo == "serie") {
-            tv = await buscarId(tvs[i].id);
+            tv = await buscarIdtv(tvs[i].id);
             tv.tipo = "serie";
         } else {
             tv = await buscarIdFilme(tvs[i].id);
@@ -84,7 +84,7 @@ const delet = async (id) => {
     })
 }
 const buscarIdFilme = async (id) => {
-    const response = await fetchWithTimeout(`https://api.themoviedb.org/3/movie/${id}?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR`);
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR`);
     const data = await response.json();
     data.release_date = new Date(data.release_date).toLocaleDateString("pt-BR");
     if (data.runtime>0){

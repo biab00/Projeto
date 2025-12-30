@@ -2,6 +2,9 @@
 <html>
 
     <!--VERSAO-->
+
+    
+
     <script>
         const server = require("../../server")
         let versao = server.versao
@@ -15,15 +18,38 @@
                 location.reload();
             }
         }, 3000)
+
+        function abrir() {
+            const modal = document.querySelector(".modal-fundo");
+            modal.style.opacity = 1;
+            modal.style.pointerEvents = "auto";
+        }
+        function fechar() {
+            const modal = document.querySelector(".modal-fundo");
+            modal.style.opacity = 0;
+            modal.style.pointerEvents = "none";
+        }      
     </script>
 
 
     <%-include("../../partials/head_objetos")%>
     <body>
         <%- include("../../partials/navbar")%>
-        <header>
-            <h1>Nosso Chat</h1>
-            <h3>(que não é o GPT)</h3>
+        <!--MODAL!!!!!-->
+            <div class="modal-fundo">
+              <div class="modal-cont">
+                <a onclick="fechar()" style="display: flex; align-self: flex-end; font-weight: bolder; color: gray; cursor: pointer;">X</a>
+                <h1> Olá <%=result.username%>! Tem certeza que pretende continuar? </h1>
+                <p> Apagar o chat é uma ação irreversível, não é possível recuperar as conversas. </p>
+                <a href="/deleteChat" style="text-decoration: none; color: inherit;"> <button type="button" id="button-sair"> Apagar Chat </button> </a>
+                <!-- <span class="fechar" onclick="fechar()">&times;</span> -->
+              </div>
+            </div>
+        <header style="display: flex; justify-content: space-around;">
+            <button onclick="abrir()"><h3>Limpar Chat</h3></button>
+            <div>
+                <h1>Nosso Chat <span style="font-size: 50%;"> (que não é o GPT) </span></h1>
+            </div>
             <img src="/img/favicon.ico" height="100%">
         </header>
         <main>
@@ -39,7 +65,7 @@
                     </div>
                 <% } else { %>
                     <div class="mensagem">
-                        <p style="color: <%=(cores[i])%>; display: flex; align-self: flex-end;" ><%=result[i].usuario%></p>
+                        <p style="color: <%=result[i].cor%>; display: flex; align-self: flex-end;" ><%=result[i].usuario%></p>
                         <p><%=result[i].mensagem %></p>
                         <p style="text-size-adjust: 1%; color: gray; display: flex; align-self: flex-start;"><%=result[i].hora%></p>
                     </div>
@@ -47,7 +73,7 @@
                 <% } %>
                 </div>
                 <form action="/mandarsms" method="POST" id="mandar"> 
-                    <input placeholder="Digite a nova mensagem" name="mensagem" class="mens">
+                    <input placeholder="Digite a nova mensagem" name="mensagem" class="mens" autocomplete="off">
                     <input hidden name="user" value="<%=result.remetente%>">
                     <button type="submit" id="enviar"> > </button>
                 </form>
@@ -55,3 +81,9 @@
         </main>
     </body>
 </html>
+
+<style>
+        nav a:first-child{
+            margin-top: 5vh;
+        }
+    </style>
