@@ -126,7 +126,7 @@ const deleteTV = async (req, res) => {
 
 //CALENDÁRIO
 const datas = async (req, res) => {
-
+    res.render("pages/objetos/calendario")
 }
 
 

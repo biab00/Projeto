@@ -1,9 +1,27 @@
 <!DOCTYPE html>
+
+<script>
+    function data () {
+         const ds = new Date().toLocaleString("pt-BR", {weekday: "long", month:"long", day: "2-digit", year: "numeric", hour: 'numeric', minute: '2-digit', hourCycle:"h24", second:"2-digit"})
+         document.getElementById("relogio").textContent = ds
+    }
+
+    setInterval(data, 1000)
+</script>
+
 <html>
     <%-include("../../partials/head_objetos")%>
     <body>
-        <main>
+        <main style="display: flex; flex-direction: column;">
             <%- include("../../partials/navbar")%>
+
+            <div>
+                <h1 id="relogio">Chegou tua hora</h1>
+            </div>
+            <div class="calendario">
+                <p>Isso aqui um dia vai ser um calendário maneiro (table)</p>
+            </div>
+
         </main>
     </body>
 </html>
