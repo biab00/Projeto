@@ -9,13 +9,11 @@
         let versao = null
 
         async function atualizar() {
-                const response = await fetch('/chat?json=true');
+                const response = await fetch('http://localhost:3000/chat?json=true');
                 const data = await response.json();
                 
-                if (JSON.stringify(data) !== versao) {
-                    versao = JSON.stringify(data);
-                    console.log('Dados:', data);
-                    console.log('Versão:', versao);
+                if (JSON.stringify(data) !== JSON.stringify(versao)) {
+                    versao = data;
                     location.reload();
         }}
 

@@ -40,4 +40,4 @@ const delet = async () => {
   await chat.truncate();
 };
 
-module.exports = {todos_chat, add, delet, teste}
+module.exports = {todos_chat, add, delet}

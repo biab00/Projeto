@@ -179,10 +179,7 @@ const chat = async (req, res) => {
             result[i].usuario = "Euu"
         }
     }
-    if(req.query.json){
-        console.log("Chu")
-        const data = await modelChat.teste()
-        console.log(data)        
+    if(req.query.json){    
         return res.json(result);
     }
 
@@ -205,6 +202,11 @@ const deletChat = async(req, res) => {
     res.redirect("/chat")
 }
 
+async function teste (){
+    const response = await fetch('http://localhost:3000/chat?json=true');
+    const data = await response.json();
+    console.log(data)
+}
 
 
 module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat};
