@@ -115,6 +115,34 @@ header{
     display: flex;
     align-items: center;
     flex-direction: column;
+    align-self: flex-start;
+}
+
+.propria{
+    background-color: rgb(182, 230, 242);
+    border: solid 0.2rem black;
+    border-radius: 10%;
+    width: 45%;
+    min-height: 5%;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-self: flex-end;
+}
+
+.nome{
+    color: black; 
+    display: flex; 
+    align-self: flex-end; 
+    align-content: flex-end;
+}
+
+.hora{
+    text-size-adjust: 1%; 
+    color: gray; 
+    display: flex; 
+    align-self: flex-start;
 }
 
 /*MODAL!!!*/

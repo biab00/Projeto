@@ -8,13 +8,39 @@
     <script>
         let versao = null
 
+        function mensagem (data) {
+            const sms = document.createElement("div")
+            const nome = document.createElement("p")
+            const p = document.createElement("p")
+            const hora = document.createElement("p")
+            nome.classList.add("nome")
+            hora.classList.add("hora")
+            if(data[-1].usuario == "Euu"){
+                sms.classList.add("propria")
+            } else {
+                sms.classList.add("mensagem")
+            }  
+            
+            sms.appendChild(nome)
+            sms.appendChild(p)
+            sms.appendChild(hora)
+            nome.textContent = data[-1].usuario
+            p.textContent = data[-1].mensagem
+            hora.textContent = data[-1].hora
+        
+            document.getElementById("tela_interna").appendChild(sms);
+
+        }
+
         async function atualizar() {
                 const response = await fetch('http://localhost:3000/chat?json=true');
                 const data = await response.json();
                 
+                document.getElementById("oi").textContent = `Versao: ${JSON.stringify(versao)}: ${cont+=1}`
+                
                 if (JSON.stringify(data) !== JSON.stringify(versao)) {
+                    mensagem(data)
                     versao = data;
-                    location.reload();
         }}
 
         setInterval(atualizar, 3000);
@@ -57,21 +83,22 @@
             <div id="tela">
                 <div id="tela_interna">
                 <%for(let i = 0; i<result.length; i++) {%>
-                <% if (result[i].usuario == "Euu") { %>
-                    <div class="mensagem" style="background-color: rgb(87, 245, 245); display: flex; align-self: flex-end;">
-                        <p style="color: black; display: flex; align-self: flex-end; align-content: flex-end;" ><%=result[i].usuario%></p>
+                    <%if(result[i].usuario == "Euu"){%>
+                    <div class="propria" >
+                        <p class="nome"><%=result[i].usuario%></p>
                         <p><%=result[i].mensagem %></p>
-                        <p style="text-size-adjust: 1%; color: gray; display: flex; align-self: flex-start;"><%=result[i].hora%></p>
+                        <p class="hora"><%=result[i].hora%></p>
                     </div>
-                <% } else { %>
-                    <div class="mensagem">
-                        <p style="color: <%=result[i].cor%>; display: flex; align-self: flex-end;" ><%=result[i].usuario%></p>
+                    <%} else {%>
+                    <div class="mensagem" >
+                        <p class="nome"><%=result[i].usuario%></p>
                         <p><%=result[i].mensagem %></p>
-                        <p style="text-size-adjust: 1%; color: gray; display: flex; align-self: flex-start;"><%=result[i].hora%></p>
+                        <p class="hora"><%=result[i].hora%></p>
                     </div>
-                <% } %>
+                    <%}%>
                 <% } %>
                 </div>
+                <h1 id="oi"></h1>
                 <form action="/mandarsms" method="POST" id="mandar"> 
                     <input placeholder="Digite a nova mensagem" name="mensagem" class="mens" autocomplete="off">
                     <input hidden name="user" value="<%=result.remetente%>">

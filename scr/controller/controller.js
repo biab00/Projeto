@@ -170,11 +170,6 @@ const chat = async (req, res) => {
         
         nomes = Array.from(new Set(nomes))
         
-        for(let c = 0; c<nomes.length; c++){
-            if (result[i] == nomes[c]){
-                result[i].cor = cores[c]
-        }}
-        
         if(result[i].usuario == req.session.username){
             result[i].usuario = "Euu"
         }
