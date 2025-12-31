@@ -6,16 +6,16 @@
     
 
     <script>
-        let versao = null
 
         function mensagem (data) {
+            if(cont != 0){
             const sms = document.createElement("div")
             const nome = document.createElement("p")
             const p = document.createElement("p")
             const hora = document.createElement("p")
             nome.classList.add("nome")
             hora.classList.add("hora")
-            if(data[-1].usuario == "Euu"){
+            if(data[data.length -1].usuario == "Euu"){
                 sms.classList.add("propria")
             } else {
                 sms.classList.add("mensagem")
@@ -24,23 +24,25 @@
             sms.appendChild(nome)
             sms.appendChild(p)
             sms.appendChild(hora)
-            nome.textContent = data[-1].usuario
-            p.textContent = data[-1].mensagem
-            hora.textContent = data[-1].hora
+            nome.textContent = data[data.length -1].usuario
+            p.textContent = data[data.length -1].mensagem
+            hora.textContent = data[data.length -1].hora
         
             document.getElementById("tela_interna").appendChild(sms);
+            
+        }cont = 1}
 
-        }
+        let versao = null
+        let cont = 0
 
         async function atualizar() {
                 const response = await fetch('http://localhost:3000/chat?json=true');
                 const data = await response.json();
-                
-                document.getElementById("oi").textContent = `Versao: ${JSON.stringify(versao)}: ${cont+=1}`
-                
+            
                 if (JSON.stringify(data) !== JSON.stringify(versao)) {
-                    mensagem(data)
                     versao = data;
+                    mensagem(data)
+                    
         }}
 
         setInterval(atualizar, 3000);
@@ -98,7 +100,7 @@
                     <%}%>
                 <% } %>
                 </div>
-                <h1 id="oi"></h1>
+                <h1 id="oi"> h</h1>
                 <form action="/mandarsms" method="POST" id="mandar"> 
                     <input placeholder="Digite a nova mensagem" name="mensagem" class="mens" autocomplete="off">
                     <input hidden name="user" value="<%=result.remetente%>">
