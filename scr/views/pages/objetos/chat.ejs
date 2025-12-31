@@ -47,6 +47,11 @@
 
         setInterval(atualizar, 3000);
 
+        window.onload = function() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+
         function abrir() {
             const modal = document.querySelector(".modal-fundo");
             modal.style.opacity = 1;
@@ -100,7 +105,6 @@
                     <%}%>
                 <% } %>
                 </div>
-                <h1 id="oi"> h</h1>
                 <form action="/mandarsms" method="POST" id="mandar"> 
                     <input placeholder="Digite a nova mensagem" name="mensagem" class="mens" autocomplete="off">
                     <input hidden name="user" value="<%=result.remetente%>">
