@@ -8,7 +8,7 @@ rota.get("/", controller.inicio);
 rota.get("/inicio", (req, res) => {res.render("pages/PaginaInicial")})
 rota.get("/login", (req, res) => res.render("pages/home"));
 rota.get("/cadastro", (req, res) => res.render("pages/cadastro"));
-rota.get("/chat", controller.chat);
+
 
 rota.post("/login", controller.login);
 rota.post("/cadastro", controller.cadastro);
@@ -22,6 +22,7 @@ rota.get("/calendario", controller.datas);
 rota.get("/musicas", controller.musicas);
 rota.get("/musicos/:id", controller.musicos);
 rota.post("/mostrarItem", controller.add)
+rota.get("/chat", controller.chat);
 
 //Adicionar itens
 rota.get("/add", (req, res) => res.render("pages/create"));

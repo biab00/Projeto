@@ -26,6 +26,7 @@ const add = async (mensagem, user) => {
     })  
 }
 
+
 const todos_chat = async () => { 
     const result = await chat.findAll()
     let total = []
@@ -39,4 +40,4 @@ const delet = async () => {
   await chat.truncate();
 };
 
-module.exports = {todos_chat, add, delet}
+module.exports = {todos_chat, add, delet, teste}

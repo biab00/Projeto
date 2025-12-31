@@ -6,18 +6,20 @@
     
 
     <script>
-        const server = require("../../server")
-        let versao = server.versao
+        let versao = null
 
-        setInterval(async () => {
-            const res = await fetch("/api/verificar")
-            const data = await res.json()
+        async function atualizar() {
+                const response = await fetch('/chat?json=true');
+                const data = await response.json();
+                
+                if (JSON.stringify(data) !== versao) {
+                    versao = JSON.stringify(data);
+                    console.log('Dados:', data);
+                    console.log('Versão:', versao);
+                    location.reload();
+        }}
 
-            if (data.versao !== versao) {
-                versao = data.versao
-                location.reload();
-            }
-        }, 3000)
+        setInterval(atualizar, 3000);
 
         function abrir() {
             const modal = document.querySelector(".modal-fundo");
@@ -28,7 +30,7 @@
             const modal = document.querySelector(".modal-fundo");
             modal.style.opacity = 0;
             modal.style.pointerEvents = "none";
-        }      
+        }
     </script>
 
 

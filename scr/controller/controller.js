@@ -163,7 +163,7 @@ const musicos = async (req, res) => {;
 const chat = async (req, res) => {
     const result = await modelChat.todos_chat();
     let nomes = []
-    const cores = []
+    const cores = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'];
     for(let i = 0; i<result.length; i++) {
         
         nomes.push(result[i].usuario)
@@ -171,18 +171,20 @@ const chat = async (req, res) => {
         nomes = Array.from(new Set(nomes))
         
         for(let c = 0; c<nomes.length; c++){
-            const cor = model.cor_aleatorio()
-            cores.push(cor)
-            if(result[i].usuario == nomes[c]){
+            if (result[i] == nomes[c]){
                 result[i].cor = cores[c]
-            }
-        }
-
+        }}
+        
         if(result[i].usuario == req.session.username){
             result[i].usuario = "Euu"
         }
     }
-    
+    if(req.query.json){
+        console.log("Chu")
+        const data = await modelChat.teste()
+        console.log(data)        
+        return res.json(result);
+    }
 
     result.remetente = req.session.username
     if(req.session.username){
@@ -195,8 +197,6 @@ const chat = async (req, res) => {
 
 const addChat = async (req, res) => {
     await modelChat.add(req.body.mensagem,req.body.user)
-    const server = require("../../server");
-    server.mudanca()
     res.redirect("/chat")
 }
 
@@ -204,5 +204,7 @@ const deletChat = async(req, res) => {
     await modelChat.delet()
     res.redirect("/chat")
 }
+
+
 
 module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat};
