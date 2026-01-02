@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize")
 const bd = require("../config/bd_sequelize")
 const bcrypt = require("bcrypt")
+const { FOREIGNKEYS } = require("sequelize/lib/query-types")
 
 
 //CADASTROS
@@ -11,7 +12,9 @@ const cadastros = bd.define("Cadastros", {
     },
     username: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true,
+        primaryKey: true
     },
     senha_cripto: {
         type: Sequelize.STRING,
@@ -21,6 +24,26 @@ const cadastros = bd.define("Cadastros", {
 
 cadastros.sync({ alter: true })
 
+const conta = bd.define("Contas", {
+    username: {
+        type: Sequelize.STRING,
+        allowNull: false, 
+        unique: true   
+    },
+    cor: {
+        type: Sequelize.STRING
+    },
+    amigos: {
+        type: Sequelize.JSON
+    },
+    notifica: {
+        type: Sequelize.JSON
+    }
+})
+
+conta.sync({alter: true})
+
+
 const cadastro = async (params) => {
     const senhaCripto = await bcrypt.hash(params.senha, 10);
     await cadastros.create({
@@ -28,6 +51,10 @@ const cadastro = async (params) => {
         username: params.username,
         senha_cripto: senhaCripto
     });
+    await conta.create({
+        username: params.username
+    })
+    await conta.belongsTo(cadastros, {foreignKey: "username"})
 }
 
 const login = async (params) => {
@@ -40,6 +67,12 @@ const login = async (params) => {
             }
     }
     return "usuario não encontrado";
+}
+
+const config = async (nome) => {
+    return conta.findOne({
+        where: {username: nome}
+    })
 }
 
 const dicionario = {
@@ -66,4 +99,22 @@ const cor_aleatorio = () => {
     return `rgb(${r}, ${g}, ${b})`
 }
 
-module.exports = {login, cadastro, dicionario, cor_aleatorio}
+const atualizar_conta = async (params) => {
+
+    return await conta.update(
+        {
+            cor: params.cor,
+        },{
+        where: {username: params.nome}
+    })
+}
+
+const mensagem_conta = async (mensagem, user) => { 
+    await conta.update({
+        notifica: mensagem
+    },{
+        where: {username: user}
+    })
+}
+
+module.exports = {login, cadastro, dicionario, cor_aleatorio, config, atualizar_conta, mensagem_conta}

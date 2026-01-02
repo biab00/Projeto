@@ -11,6 +11,7 @@ main{
     align-items: center;
     flex-wrap: wrap;
     height: 90vh;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -143,6 +144,21 @@ header{
     color: gray; 
     display: flex; 
     align-self: flex-start;
+}
+
+.conta{
+    margin: 3%;
+    border: solid black 2px;
+    background-color: #cbcbcb;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#bacana{
+    background-image: linear-gradient(130deg, rgb(182, 230, 242) 50%, rgb(182, 242, 212) 50%)
 }
 
 /*MODAL!!!*/

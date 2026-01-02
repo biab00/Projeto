@@ -4,7 +4,45 @@
     <body>
         <main>
             <%- include("../../partials/navbar")%>
-            
+            <h1>Olá mano <%=user.username%>! Suave?</h1>
+            <div class="recado" style="display: none;">
+                <h2 id="alerta"> Essa cor é clara, pode ser difícil enxergar </h2>
+            </div>
+            <form action="/personal?_method=PUT" method="POST" class="conta">
+                <h3>Cor do nome no chat: <span id="bacana" style="color: <%=user.cor%>">bacana</span></h3>
+                <input type="color" name="cor">
+                <input hidden name="nome" value="<%=user.username %>">
+
+                <% if(user.amigos) {%>
+                <% for(let i = 0; i<user.amigos.length; i++) {%>
+                    <h3>Amigos: <%=user.amigos[i]%></h3>
+                <% }} %>      
+                <button type="submit">Enviar</button>     
+            </form>
+            <% if(user.notifica) {%>
+            <% for(let i = 0; i<user.notifica.length; i++) {%>
+                <h3>Mensagens: <%=user.notifica[i]%></h3>
+            <% }} %>
         </main>
     </body>
 </html>
+
+<script>
+    const input = document.getElementsByTagName("input")
+    const bacana = document.getElementsByTagName("span")
+    input[0].addEventListener("change", () => {
+        const hexa = input[0].value
+        bacana[0].style.color = hexa
+
+        const r = parseInt(hexa.substr(1, 2), 16);
+        const g = parseInt(hexa.substr(3, 2), 16);
+        const b = parseInt(hexa.substr(5, 2), 16);
+        const luminosidade = ( r * 299 + g * 587 + b * 114) / 1000;
+
+        if (luminosidade > 128) {
+            document.getElementsByClassName("recado")[0].style.display = "flex"
+        } else {
+            document.getElementsByClassName("recado")[0].style.display = "none"
+        }
+    })
+</script>

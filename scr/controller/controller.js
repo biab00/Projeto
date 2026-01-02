@@ -218,5 +218,20 @@ const galeria = async (req, res) => {
     return res.render("pages/consultas/galeria", {imagens, videos})
 }
 
+const conta = async (req, res) => {
+    if(req.session.username){
+        const user = await model.config(req.session.username)
+        return res.render("pages/objetos/config", {user})
+    }
+    else{
+        res.redirect("/login")
+    }
+}
 
-module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat, galeria};
+const atualizar_conta = async (req, res) => {
+    await model.atualizar_conta(req.body)
+    res.redirect("/config")
+}
+
+
+module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat, galeria, conta,atualizar_conta};

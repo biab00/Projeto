@@ -14,7 +14,7 @@ rota.post("/login", controller.login);
 rota.post("/cadastro", controller.cadastro);
 
 //Mostrar itens
-rota.get("/config", (req, res) => res.render("pages/objetos/config"));
+rota.get("/config", controller.conta);
 rota.get("/livros", controller.livros);
 rota.get("/jogos", controller.jogos);
 rota.get("/TV", controller.tv);
@@ -36,7 +36,7 @@ rota.get("/galeria/:id&:tipo", controller.galeria)
 
 
 
-//Deletar itens
+//Deletar itens (não tinha que ser rota.delete?)
 rota.get("/deleteJogo/:id", controller.deleteJogo)
 rota.get("/deleteMusica/:id", controller.deleteMusica)
 rota.get("/deleteLivro/:id", controller.deleteLivro)
@@ -68,5 +68,8 @@ rota.get("/buscar/livro/:nome", async (req, res) => {
     const livro = await modelLivro.buscarLivros(req.params.nome);
     res.redirect("/livros");
 });
+
+//CONTA
+rota.put("/personal", controller.atualizar_conta)
 
 module.exports = rota;
