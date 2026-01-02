@@ -9,7 +9,8 @@
                     <%for(let i=0; i<musicas.length; i++) { %>
                         <div class="item">
                             <p>ALERTA: Algumas cifras não funcionam corretamente</p>
-                            <a target="_blank" href="https://www.cifraclub.com.br/<%=musicas[i].artist.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, "").trim().replace(/\s+/g, "-");%>/<%=musicas[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, "").trim().replace(/\s+/g, "-");%>/">Cifra</a>
+                            <a target="_blank" style="color: black" href="https://www.cifraclub.com.br/<%=musicas[i].artist.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, "").trim().replace(/\s+/g, "-");%>/<%=musicas[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, "").trim().replace(/\s+/g, "-");%>/">Cifra</a>
+                            <a target="_blank" href="<%=musicas[i].link%>" style="cursor:default; text-decoration: none;">💜</a>
                             <h3>
                                 <%=musicas[i].title%>: <%=musicas[i].id%>
                             </h3>

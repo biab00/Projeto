@@ -197,11 +197,26 @@ const deletChat = async(req, res) => {
     res.redirect("/chat")
 }
 
-async function teste (){
-    const response = await fetch('http://localhost:3000/chat?json=true');
-    const data = await response.json();
-    console.log(data)
+const galeria = async (req, res) => {
+    let response_img = 9
+    let response_vid = 17;
+    if(req.params.tipo == "filme"){
+        response_img = await fetch(`https://api.themoviedb.org/3/movie/${req.params.id}/images?api_key=a3a6cb857a527d340a4234a5e2d1c7f5`)
+        response_vid = await fetch(`https://api.themoviedb.org/3/movie/${req.params.id}/videos?api_key=a3a6cb857a527d340a4234a5e2d1c7f5`)
+    } else if (req.params.tipo == "serie") {
+        response_img = await fetch(`https://api.themoviedb.org/3/tv/${req.params.id}/images?api_key=a3a6cb857a527d340a4234a5e2d1c7f5`)
+        response_vid = await fetch(`https://api.themoviedb.org/3/tv/${req.params.id}/videos?api_key=a3a6cb857a527d340a4234a5e2d1c7f5`)
+    }
+
+
+    let imagens = await response_img.json()
+    imagens = imagens.backdrops
+
+    let videos = await response_vid.json()
+    videos = videos.results
+
+    return res.render("pages/consultas/galeria", {imagens, videos})
 }
 
 
-module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat};
+module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat, galeria};

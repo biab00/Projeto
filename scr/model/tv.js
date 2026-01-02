@@ -21,7 +21,7 @@ const buscarTV = async (nome) => {
         const data = await response.json();
         const todos_tv = [];
         for (let i = 0; i < data.results.length; i++) {
-          const tv = await buscarId(data.results[i].id);
+          const tv = await buscarIdtv(data.results[i].id);
           todos_tv.push(tv);
         }
         let todos = await tv.findAll();
@@ -46,9 +46,8 @@ const buscarIdtv = async (id) => {
     const data = await response.json();
     data.first_air_date = new Date(data.first_air_date).toLocaleDateString("pt-BR");
     data.last_air_date = new Date(data.last_air_date).toLocaleDateString("pt-BR");
-    for(let i=0; i<data.length; i++){
-        data[i].vote_average = (data[i].vote_average).toFixed(1);
-    };
+    data.vote_average = (data.vote_average).toFixed(1);
+
     return data;
 }
 
@@ -66,9 +65,9 @@ const todos_tv = async () => {
         } 
         todos_tv.push(tv);
     }
-    for(let i=0; i<todos_tv.length; i++){
-        todos_tv[i].vote_average = (todos_tv[i].vote_average).toFixed(1);
-    };
+
+    console.log("12: "+todos_tv)
+
     return todos_tv;
 }
 const add = async (id, tipo) => {
@@ -87,6 +86,7 @@ const buscarIdFilme = async (id) => {
     const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=a3a6cb857a527d340a4234a5e2d1c7f5&language=pt-BR`);
     const data = await response.json();
     data.release_date = new Date(data.release_date).toLocaleDateString("pt-BR");
+    data.vote_average = (data.vote_average).toFixed(1);
     if (data.runtime>0){
       data.runtime = `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}min`;
     } else{

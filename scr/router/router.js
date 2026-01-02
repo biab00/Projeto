@@ -29,7 +29,12 @@ rota.get("/add", (req, res) => res.render("pages/create"));
 rota.get("/addJogo/:id", controller.addJogo)
 rota.get("/addMusica/:id", controller.addMusica)
 rota.get("/addLivro/:id", controller.addLivro)
-rota.get("/addTV/:id&:tipo", controller.addTv)
+rota.get("/addTv/:id&:tipo", controller.addTv)
+
+
+rota.get("/galeria/:id&:tipo", controller.galeria)
+
+
 
 //Deletar itens
 rota.get("/deleteJogo/:id", controller.deleteJogo)
