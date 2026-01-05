@@ -5,7 +5,8 @@ const tv = db.define("TV", {
   id: {
       type: sequelize.INTEGER,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
+      unique: true
   },
   tipo: {
     type: sequelize.STRING,
@@ -65,8 +66,6 @@ const todos_tv = async () => {
         } 
         todos_tv.push(tv);
     }
-
-    console.log("12: "+todos_tv)
 
     return todos_tv;
 }

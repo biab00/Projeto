@@ -89,7 +89,17 @@ const dicionario = {
     Thriller: "Suspense",
     TV_Movie: "Seriado de TV",
     War: "Guerra",
-    Western: "Faroeste"
+    Western: "Faroeste",
+    Rumored: "Rumor (não confirmado)",
+    Planned: "pré-produção",
+    "In Production": "em produção",
+    "Post Production": "pós produção",
+    Airing: "No ar",
+    Ended: "Finalizado",
+    Canceled: "Cancelado",
+    "Returning Series": "Novas temporadas chegando",
+    Finished: "Produzido",
+    Released: "Lançado"
 }
 
 const cor_aleatorio = () => {

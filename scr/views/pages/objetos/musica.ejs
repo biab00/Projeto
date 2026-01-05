@@ -6,6 +6,10 @@
         <%- include("../../partials/navbar")%>
             <main>
                 <% if(musicas.length> 0) { %>
+                    <div class="recado">
+                        <h4>Adicionar novo hit??</h4>
+                        <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                     </div>
                     <%for(let i=0; i<musicas.length; i++) { %>
                         <div class="item">
                             <p>ALERTA: Algumas cifras não funcionam corretamente</p>
@@ -42,10 +46,6 @@
                                                     lista!</button></a>
                         </div>
                         <%}%>
-                            <div class="recado">
-                                <h4>Adicionar novo hit??</h4>
-                                <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                            </div>
                             <%} else {%>
                                 <div class="recado">
                                     <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de adicionar algum?</h1>

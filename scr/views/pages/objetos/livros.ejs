@@ -5,6 +5,10 @@
         <%- include("../../partials/navbar")%>
         <main>
             <% if(livros.length > 0) { %>
+                <div class="recado">
+                    <h4>Adicionar novo livro??</h4>
+                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                </div>
                 <%for(let i = 0; i<livros.length; i++) { %>
                     <div class="item">
                         <h3><%=livros[i].volumeInfo.title%>: <%=livros[i].id%></h3>
@@ -39,10 +43,7 @@
                         <a href="/deleteLivro/<%=livros[i].id%>"><button>Excluir da lista!</button></a>
                     </div>
                 <%}%>
-                <div class="recado">
-                    <h4>Adicionar novo livro??</h4>
-                    <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                </div>
+                
             <%} else {%>
                 <div class="recado">
                     <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de adicionar algum?</h1>

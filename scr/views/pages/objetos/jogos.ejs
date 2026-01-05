@@ -6,6 +6,10 @@
         <%- include("../../partials/navbar")%>
             <main>
                 <% if(jogos.length> 0) { %>
+                    <div class="recado">
+                        <h4>Quer adicionar outro volume? Vá em frente</h4>
+                        <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                    </div>
                     <%for(let i=0; i<jogos.length; i++) { %>
 
                         <div class="item">
@@ -26,6 +30,7 @@
                                     </li>
                                     <%}%>
                                         <%}%>
+                                        <p><%=jogos[i][0].summaryErro%></p>
                                             <h4>
                                                 <%=jogos[i][0].summary%>
                                             </h4>
@@ -48,10 +53,6 @@
                                             <a href="/deleteJogo/<%=jogos[i][0].id%>"><button>Excluir da lista!</button></a>
                                         </div>
                         <% } %>
-                            <div class="recado">
-                                <h4>Quer adicionar outro volume? Vá em frente</h4>
-                                <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                            </div>
                             <%} else {%>
                                 <div class="recado">
                                     <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de

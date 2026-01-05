@@ -6,6 +6,7 @@ const modelJogo = require("../model/jogos");
 const modelMusica = require("../model/musicas");
 const modelTv = require("../model/tv");
 const modelChat = require("../model/chat");
+const modelLista = require("../model/lista")
 
 
 //BÁSICO
@@ -45,7 +46,7 @@ const add = async (req, res) => {
             const result = await modelTv.buscarTV(req.body.nome);          
             for(let i = 0; i<result.lenght; i++) {
                 for(let e = 0; e<result[i].genres.lenght; e++){
-                    result[i].genres[e].name = model.dicionario(result[i].genres[e].name)
+                    result[i].genres[e].name = model.dicionario[result[i].genres[e].name]
                 }
             }
             res.render("pages/consultas/tv", {result});
@@ -53,7 +54,7 @@ const add = async (req, res) => {
             const result = await modelTv.buscarFilme(req.body.nome);
             for(let i = 0; i<result.lenght; i++) {
                 for(let e = 0; e<result[i].genres.lenght; e++){
-                    result[i].genres[e].name = model.dicionario(result[i].genres[e].name)
+                    result[i].genres[e].name = model.dicionario[result[i].genres[e].name]
                 }
             }
             res.render("pages/consultas/tv(film)", {result});
@@ -109,7 +110,10 @@ const deleteJogo = async (req, res) => {
 
 //TV
 const tv = async (req, res) => {
-    const tv = await modelTv.todos_tv() 
+    const tv = await modelTv.todos_tv()
+    for (let i = 0; i<tv.length; i++) {
+        tv[i].status = model.dicionario[tv[i].status]
+    }
     res.render("pages/objetos/tv", {tv})
 }
 
@@ -197,6 +201,32 @@ const deletChat = async(req, res) => {
     res.redirect("/chat")
 }
 
+const lista = async (req, res) => {
+    const todos = await modelLista.todos()
+    const count = await modelLista.count()
+    return res.render("pages/objetos/lista", {todos, count})
+}
+
+const addLista = async (req, res) => {
+    if (await modelLista.count() < 20) {
+        await modelLista.add(req.body)
+        res.redirect("/lista")
+    } else {
+        res.send("erro: Limite de 20 tarefas atingido")
+    }
+        
+}
+
+const deleteLista = async (req, res) => {
+    await modelLista.delet(req.params.id)
+    res.redirect("/lista")    
+}
+
+const atualizar_lista = async (req, res) => {
+    await modelLista.atualizar(req.body)
+    res.redirect("/lista")
+}
+
 const galeria = async (req, res) => {
     let response_img = 9
     let response_vid = 17;
@@ -234,4 +264,4 @@ const atualizar_conta = async (req, res) => {
 }
 
 
-module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat, galeria, conta,atualizar_conta};
+module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat, galeria, conta,atualizar_conta, deleteLista, addLista, lista, atualizar_lista};

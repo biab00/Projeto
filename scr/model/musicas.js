@@ -5,17 +5,9 @@ const musica = bd.define("Musica", {
     id: {
         type: sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false
-    },
-    nome_musica: {
-        type: sequelize.STRING(200)
-    },
-    banda: {
-        type: sequelize.STRING(200)
-    },
-    anoMusica: {
-        type: sequelize.INTEGER
-    },
+        allowNull: false,
+        unique: true
+    }
 });
 
 musica.sync({ alter: true })

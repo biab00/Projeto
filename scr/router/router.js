@@ -23,13 +23,15 @@ rota.get("/musicas", controller.musicas);
 rota.get("/musicos/:id", controller.musicos);
 rota.post("/mostrarItem", controller.add)
 rota.get("/chat", controller.chat);
+rota.get("/lista", controller.lista)
 
-//Adicionar itens
+//Adicionar itens `POST??
 rota.get("/add", (req, res) => res.render("pages/create"));
 rota.get("/addJogo/:id", controller.addJogo)
 rota.get("/addMusica/:id", controller.addMusica)
 rota.get("/addLivro/:id", controller.addLivro)
 rota.get("/addTv/:id&:tipo", controller.addTv)
+rota.post("/addLista", controller.addLista)
 
 
 rota.get("/galeria/:id&:tipo", controller.galeria)
@@ -37,14 +39,15 @@ rota.get("/galeria/:id&:tipo", controller.galeria)
 
 
 //Deletar itens (não tinha que ser rota.delete?)
-rota.get("/deleteJogo/:id", controller.deleteJogo)
 rota.get("/deleteMusica/:id", controller.deleteMusica)
+rota.get("/deleteJogo/:id", controller.deleteJogo)
 rota.get("/deleteLivro/:id", controller.deleteLivro)
 rota.get("/deleteTV/:id", controller.deleteTV)
+rota.get("/deleteLista/:id", controller.deleteLista)
 
 //Chat 
 rota.post("/mandarsms", controller.addChat)
-rota.get("/deleteChat", controller.deletChat)
+rota.delete("/deleteChat", controller.deletChat)
 
 //Buscar itens
 rota.get("/buscar/jogo/:nome", async (req, res) => {
@@ -68,6 +71,10 @@ rota.get("/buscar/livro/:nome", async (req, res) => {
     const livro = await modelLivro.buscarLivros(req.params.nome);
     res.redirect("/livros");
 });
+
+
+rota.put("/atualizarTarefa", controller.atualizar_lista)
+
 
 //CONTA
 rota.put("/personal", controller.atualizar_conta)

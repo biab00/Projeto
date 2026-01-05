@@ -6,6 +6,10 @@
         <%- include("../../partials/navbar")%>
             <main>
                 <% if(tv.length> 0) { %>
+                    <div class="recado">
+                        <h4>Quer adicionar outro titulo? Vá em frente</h4>
+                        <a href="/add"><button style="width: 10vw;">CREATE</button></a>
+                    </div>
                     <%for(let i=0; i<tv.length; i++) { %>
                         <% if (tv[i].tipo=="serie" ) {%>
                             <div class="item">
@@ -19,6 +23,7 @@
                                 <% } else { %>
                                     <img src="/img/nocapa.jpg" height="200px" width="auto">
                                 <% } %>
+                                <p><%=tv[i].status%></p>
                                 <% if(tv[i].vote_average > 0.0) { %>
                                             <h4>
                                                 <%=tv[i].vote_average%>/10
@@ -53,7 +58,7 @@
                                 <h4><%=tv[i].origin_country%>-<%=tv[i].original_language%> (<%=tv[i].original_name%>)</h4>
                                 <h4>Episódios: <%=tv[i].number_of_episodes%></h4>
                                 <h4>Temporadas: <%=tv[i].number_of_seasons%></h4>
-                                <% if(tv[i].episode_run_time) { %>
+                                <% if(tv[i].episode_run_time[0]) { %>
                                     <h4>Tempo estimado dos episódios: <%=tv[i].episode_run_time%> min</h4>
                                 <% } %>
                                 </br>
@@ -80,6 +85,7 @@
                                     <h4>
                                         <%=tv[i].runtime%>
                                     </h4>
+                                    <p><%=tv[i].status%></p>
                                     <% if(tv[i].vote_average > 0.0) { %>
                                             <h4>
                                                 <%=tv[i].vote_average%>/10
@@ -122,10 +128,6 @@
                             </div>
                         <% } %> 
                     <% } %>
-                    <div class="recado">
-                        <h4>Quer adicionar outro titulo? Vá em frente</h4>
-                        <a href="/add"><button style="width: 10vw;">CREATE</button></a>
-                    </div>
                    <%} else { %>
                         <div class="recado">
                             <h1 style="text-align: center;">Ainda não temos nenhum volume... Gostaria de adicionar algum?</h1>

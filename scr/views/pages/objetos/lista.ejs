@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <%-include("../../partials/head_objetos") %>
+    <body>
+        <%-include("../../partials/navbar") %>
+        <main>
+            <p>apenas 20 itens na lista ok? (<%=count%>/20)</p>
+            <form action="/addLista" method="POST">
+                <p> Inserir nova tarefa </p>
+                <input name="nome" type="text">
+                <button type="submit"> Enviar </button>
+            </form>
+            <div class="item">
+                <% for(let i = 0; i<todos.length;i++) {%>
+                    <form action="/atualizarTarefa?_method=PUT" method="POST">
+                    <% if (todos[i].feito == false) {%>
+                    <li style="display: flex; align-items: center; justify-content: center;">
+                        <p style="margin: 0; color: rgb(195, 0, 0)" id="<%=todos[i].id%>"><%=todos[i].nome%></p> 
+                        <button style="background: none; border: none; cursor: pointer; margin:1px" type="submit" title="mudar o estado"> 🔄 </button>
+                        <input value = "<%=todos[i].id%>" name="id" hidden>
+                        <input value = "true" name="feito" hidden> 
+                        <a href="deleteLista/<%=todos[i].id%>" style="text-decoration: none;" title="excluir"> 🗑️ </a>
+                    </li>
+                    <% } else { %>
+                        <li style="display: flex; align-items: center; justify-content: center;">
+                            <p style="text-decoration: line-through; margin: 0; color: green" id="<%=todos[i].id%>"><%=todos[i].nome%></p> 
+                            <button style="background: none; border: none; cursor: pointer; margin:1px" type="submit" title="mudar o estado"> 🔄 </button> 
+                            <input value = "<%=todos[i].id%>" name="id" hidden>
+                            <input value = "false" name="feito" hidden> 
+                            <a href="deleteLista/<%=todos[i].id%>" style="text-decoration: none;" title="excluir"> 🗑️ </a>
+                        </li>
+                    <% } %>
+                    </form>
+                <% } %>
+            </div>
+        </main>
+    </body>
+</html>

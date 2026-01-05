@@ -5,7 +5,8 @@ const livros = db.define("Livros", {
     id:{
         type: sequelize.STRING,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        unique: true
     }
 });
 

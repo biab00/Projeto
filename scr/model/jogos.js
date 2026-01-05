@@ -3,36 +3,21 @@ const sequelize = require("sequelize");
 
 // libreTranslate
 async function traduzir(texto) {
-    try {
-        const response = await fetch("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(texto) + "&langpair=en|pt");
-        const data = await response.json();
-        if (data.responseStatus !== 200) {
+    const response = await fetch("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(texto) + "&langpair=en|pt");
+    const data = await response.json();
+    if (data.responseStatus !== 200) {
             return texto;
         }
-        return data.responseData.translatedText;
-    } catch (err) {
-        return texto;
-    }
+    return data.responseData.translatedText;
 }
 
 const jogos = bd.define("Jogos", {
     id: {
         type: sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true
-    },
-    nome: {
-        type: sequelize.STRING(200),
-    },
-    criador: {
-        type: sequelize.STRING(20),
-    },
-    ano: {
-        type: sequelize.INTEGER,
-    },
-    plataforma: {
-        type: sequelize.STRING(60),
-    },
+        primaryKey: true,
+        unique: true
+    }
 });
 
 jogos.sync({ alter: true })
@@ -122,8 +107,7 @@ const buscarJogos = async (nome_jogo) => {
             dev.forEach(d => desenvolvedores.push(d.company.name));
             }
 
-            const traducao = await traduzir(jogo.summary)
-            jogo.summary = traducao;
+            jogo[0].summary = await traduzir(jogo[0].summary);
 
             jogo.involved_companies = desenvolvedores;
         }
@@ -140,6 +124,7 @@ const todos_jogos = async () => {
     const todos_jogos = [];
     for (let i = 0; i < jg.length; i++) {
         const jogo = await buscarId(jg[i].id);
+        jogo[0].summary = await traduzir(jogo[0].summary);
         todos_jogos.push(jogo);
     }
     return todos_jogos;
