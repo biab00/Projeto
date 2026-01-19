@@ -48,7 +48,6 @@ const todos_livros = async () => {
     const todos_livros = [];
     for (let i = 0; i < liv.length; i++) {
         const id = liv[i].dataValues.id
-        console.log(id)
         const livro = await buscarIdLiv(id);
         todos_livros.push(livro);
     }

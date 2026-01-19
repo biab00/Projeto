@@ -1,19 +1,19 @@
-body{
-    background-color: bisque; 
+body {
+    background-color: bisque;
     display: flex;
-    flex-direction: column; 
-    margin-top: 0; 
+    flex-direction: column;
+    margin-top: 0;
 }
 
-main{
+main {
     display: flex;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.recado{
+.recado {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -23,17 +23,17 @@ main{
     align-items: center;
 }
 
-.item{
+.item {
     text-align: center;
     border: 0.5rem solid black;
     border-radius: 5px;
     background-color: coral;
     margin: 1%;
-    padding:1%;
+    padding: 1%;
     max-width: 40%;
 }
 
-#top{
+#top {
     background-color: white;
     color: black;
     border: 0.2rem solid black;
@@ -49,7 +49,7 @@ main{
     align-items: center;
 }
 
-header{
+header {
     background-color: cadetblue;
     display: flex;
     justify-content: end;
@@ -59,7 +59,7 @@ header{
     gap: 10px
 }
 
-#tela{
+#tela {
     border: double 0.5rem black;
     background-color: aliceblue;
     min-height: 90%;
@@ -68,7 +68,7 @@ header{
     margin-bottom: 3%;
 }
 
-#tela_interna{
+#tela_interna {
     display: flex;
     flex-direction: column;
     padding: 1%;
@@ -76,7 +76,7 @@ header{
     gap: 5px;
 }
 
-#enviar{
+#enviar {
     background-color: cadetblue;
     border: none;
     height: 80%;
@@ -85,10 +85,10 @@ header{
     cursor: pointer;
 }
 
-#mandar{
+#mandar {
     height: 5vh;
     width: 100%;
-    background-color:rgb(199, 242, 242);
+    background-color: rgb(199, 242, 242);
     display: flex;
     align-items: center;
     justify-self: flex-end;
@@ -98,12 +98,12 @@ header{
     gap: 5px
 }
 
-.mens{
+.mens {
     margin: 4px;
     width: 85%;
 }
 
-.mensagem{
+.mensagem {
     background-color: rgb(182, 242, 212);
     border: solid 0.2rem black;
     border-radius: 10%;
@@ -116,7 +116,7 @@ header{
     align-self: flex-start;
 }
 
-.propria{
+.propria {
     background-color: rgb(182, 230, 242);
     border: solid 0.2rem black;
     border-radius: 10%;
@@ -129,21 +129,21 @@ header{
     align-self: flex-end;
 }
 
-.nome{
-    color: black; 
-    display: flex; 
-    align-self: flex-end; 
+.nome {
+    color: black;
+    display: flex;
+    align-self: flex-end;
     align-content: flex-end;
 }
 
-.hora{
-    text-size-adjust: 1%; 
-    color: gray; 
-    display: flex; 
+.hora {
+    text-size-adjust: 1%;
+    color: gray;
+    display: flex;
     align-self: flex-start;
 }
 
-.conta{
+.conta {
     margin: 3%;
     border: solid black 2px;
     background-color: #cbcbcb;
@@ -154,13 +154,13 @@ header{
     justify-content: center;
 }
 
-#bacana{
+#bacana {
     background-image: linear-gradient(130deg, rgb(182, 230, 242) 50%, rgb(182, 242, 212) 50%)
 }
 
 /*MODAL!!!*/
- .modal-fundo {
-    display:flex;
+.modal-fundo {
+    display: flex;
     justify-content: center;
     opacity: 0;
     pointer-events: none;
@@ -171,11 +171,12 @@ header{
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);;
+    background-color: rgba(0, 0, 0, 0.4);
+    ;
     transition: all 0.5s ease-in-out;
-  }
+}
 
-  .modal-cont{
+.modal-cont {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -187,19 +188,43 @@ header{
     border: 3px solid #888;
     width: 60%;
     gap: 15px;
-    height: 40%;;
-  }
+    height: 40%;
+    ;
+}
 
-  .fechar {
+.fechar {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
+}
 
-  .fechar:hover,
-  .fechar:focus {
+.fechar:hover,
+.fechar:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-  }
+}
+
+/*Galeria*/
+.video_interno {
+    border: dashed black 2px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px;
+    width: 40%;
+    height: 30vh;
+    text-align: center;
+    border-radius: 95px 155px 148px 103px / 48px 95px 130px 203px;
+}
+
+#videos{
+    display: flex;
+    flex-flow:row wrap;
+    max-width: 90%;
+    gap: 5px; 
+    margin-left: 4%;
+}

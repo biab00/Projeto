@@ -43,18 +43,22 @@ const add = async (req, res) => {
         const modelTv = require("../model/tv");
         
         if (req.body.tipo_tv == "serie") {
-            const result = await modelTv.buscarTV(req.body.nome);          
-            for(let i = 0; i<result.lenght; i++) {
-                for(let e = 0; e<result[i].genres.lenght; e++){
-                    result[i].genres[e].name = model.dicionario[result[i].genres[e].name]
+            const result = await modelTv.buscarTV(req.body.nome);       
+            for(let i = 0; i<result.length; i++) {
+                for(let e = 0; e<result[i].genres.length; e++){
+                    if (tv[i].genres[e].name in model.dicionario){
+                        tv[i].genres[e].name = model.dicionario[tv[i].genres[e].name]
+                    }
                 }
             }
             res.render("pages/consultas/tv", {result});
         }else{
             const result = await modelTv.buscarFilme(req.body.nome);
-            for(let i = 0; i<result.lenght; i++) {
-                for(let e = 0; e<result[i].genres.lenght; e++){
-                    result[i].genres[e].name = model.dicionario[result[i].genres[e].name]
+            for(let i = 0; i<result.length; i++) {
+                for(let e = 0; e<result[i].genres.length; e++){
+                    if (tv[i].genres[e].name in model.dicionario){
+                        tv[i].genres[e].name = model.dicionario[tv[i].genres[e].name]
+                    }
                 }
             }
             res.render("pages/consultas/tv(film)", {result});
@@ -113,6 +117,10 @@ const tv = async (req, res) => {
     const tv = await modelTv.todos_tv()
     for (let i = 0; i<tv.length; i++) {
         tv[i].status = model.dicionario[tv[i].status]
+        for(let e = 0; e<tv[i].genres.length; e++){
+            if (tv[i].genres[e].name in model.dicionario){
+            tv[i].genres[e].name = model.dicionario[tv[i].genres[e].name]
+        }}
     }
     res.render("pages/objetos/tv", {tv})
 }
@@ -250,8 +258,10 @@ const galeria = async (req, res) => {
 
 const conta = async (req, res) => {
     if(req.session.username){
+        console.log(req.session.username)
         const user = await model.config(req.session.username)
-        return res.render("pages/objetos/config", {user})
+        if (user) return res.render("pages/objetos/config", {user})
+        else return res.send("Usuário não encontrado")
     }
     else{
         res.redirect("/login")

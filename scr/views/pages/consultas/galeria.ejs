@@ -15,18 +15,17 @@
 
     <h2>Videos</h2>
     <p style="margin-left: 4%; text-align: justify;">Eu tentei colocar os vídeos por aqui, mas deu ruim (por enquanto). Então pra ver os vídeos clique no link do youtube...</p>
-    <div style="display: flex; gap: 5px; margin-left: 4%;">
-    
-    <% for(let i = 0; i<videos.length; i++) { %>
-        <div style="border: dashed  black 2px; margin: 5px; display: flex; justify-content: center; align-items: center;flex-direction: column; padding: 5px; width: 40%; text-align: center; border-radius: 95px 155px 148px 103px / 48px 95px 130px 203px;">
-            <% if (videos[i].official = true) {%>
-                <p><%=videos[i].type%>: Oficial</p>
-            <% } else { %>
-                <p><%=videos[i].type%>: Não oficial %></p>
-            <% } %>
-            <a target="_blank" href="https://www.youtube.com/watch?v=<%=videos[i].key%>"> <%=videos[i].name %></a>
-        </div>
-    <%}%>
+    <div id="videos">
+        <% for(let i = 0; i<videos.length; i++) { %>
+                <div class="video_interno">
+                    <% if (videos[i].official = true) {%>
+                        <p><%=videos[i].type%>: Oficial</p>
+                    <% } else { %>
+                        <p><%=videos[i].type%>: Não oficial %></p>
+                    <% } %>
+                    <a target="_blank" href="https://www.youtube.com/watch?v=<%=videos[i].key%>"> <%=videos[i].name %></a>
+                </div>
+        <%}%>
     </div>
     </div>
 </main>

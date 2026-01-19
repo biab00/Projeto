@@ -4,12 +4,15 @@
     <body>
         <%-include("../../partials/navbar") %>
         <main>
-            <p>apenas 20 itens na lista ok? (<%=count%>/20)</p>
+            <div>
+                <p>apenas 20 itens na lista ok? (<%=count%>/20)</p>
+            
             <form action="/addLista" method="POST">
                 <p> Inserir nova tarefa </p>
                 <input name="nome" type="text">
                 <button type="submit"> Enviar </button>
             </form>
+        </div>
             <div class="item">
                 <% for(let i = 0; i<todos.length;i++) {%>
                     <form action="/atualizarTarefa?_method=PUT" method="POST">

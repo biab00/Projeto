@@ -16,9 +16,11 @@
                         <% } else { %>
                             <img src="/img/nocapa.jpg" height="200px" width="auto">
                         <% } %>
-                            <%for(let e = 0; e<result[i].volumeInfo.authors.length; e++) { %>
+                        <% if (result[i].volumeInfo.authors){ %>
+                             <%for(let e = 0; e<result[i].volumeInfo.authors.length; e++) { %>
                                 <li><%=result[i].volumeInfo.authors[e]%></li>
                             <%}%> 
+                        <% } %>
                         <h4><%=result[i].volumeInfo.subTitle%></h4>
                         <%if (result[i].volumeInfo.categories) { %>
                             <h4> Categorias: </h4>
