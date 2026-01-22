@@ -1,7 +1,6 @@
 const Sequelize = require("sequelize")
 const bd = require("../config/bd_sequelize")
 const bcrypt = require("bcrypt")
-const { FOREIGNKEYS } = require("sequelize/lib/query-types")
 
 
 //CADASTROS
@@ -31,13 +30,16 @@ const conta = bd.define("Contas", {
         unique: true   
     },
     cor: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+         defaultValue: 'rgb(0,0,0)'
     },
-    amigos: {
-        type: Sequelize.JSON
+    descricao: {
+        type: Sequelize.STRING,
+        defaultValue: 'Sem descrição (ainda)'
     },
-    notifica: {
-        type: Sequelize.JSON
+    img: {
+        type: Sequelize.STRING,
+        defaultValue: '/img/foto.jpg'
     }
 })
 
@@ -72,6 +74,15 @@ const login = async (params) => {
 const config = async (nome) => {
     return conta.findOne({
         where: {username: nome}
+    })
+}
+
+const deleteConta = async (nome) => {
+    await conta.destroy({
+        where: { username: nome }
+    })
+    await cadastros.destroy({
+        where: { username: nome }
     })
 }
 
@@ -120,12 +131,38 @@ const atualizar_conta = async (params) => {
     })
 }
 
-const mensagem_conta = async (mensagem, user) => { 
+const todas_contas = async () => await conta.findAll()
+
+const mensagem = bd.define("Mensagens", {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  remetente: {
+    type: Sequelize.STRING(200)
+  },
+  destinatario: {
+    type: Sequelize.STRING(200)
+  },
+  tipo: {
+    type: Sequelize.STRING(400)
+  }
+})
+
+mensagem.sync({alter:true})
+
+const todas_mensagens = async () => mensagem.findAll()
+
+const addImg = async (src, username) => conta.update(
+    { img: src }, {where: {username: username}}
+)
+
+const mudarDesc = async (params) => {
     await conta.update({
-        notifica: mensagem
-    },{
-        where: {username: user}
-    })
+        descricao: params.descricao
+    }, {where: {username: params.nome}})
 }
 
-module.exports = {login, cadastro, dicionario, cor_aleatorio, config, atualizar_conta, mensagem_conta}
+module.exports = {login, cadastro, dicionario, cor_aleatorio, config, atualizar_conta,todas_mensagens, todas_contas, addImg, deleteConta, mudarDesc}

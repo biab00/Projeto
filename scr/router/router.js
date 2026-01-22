@@ -44,6 +44,7 @@ rota.get("/deleteJogo/:id", controller.deleteJogo)
 rota.get("/deleteLivro/:id", controller.deleteLivro)
 rota.get("/deleteTV/:id", controller.deleteTV)
 rota.get("/deleteLista/:id", controller.deleteLista)
+rota.get("/deleteConta/:username", controller.deleteConta)
 
 //Chat 
 rota.post("/mandarsms", controller.addChat)
@@ -78,5 +79,8 @@ rota.put("/atualizarTarefa", controller.atualizar_lista)
 
 //CONTA
 rota.put("/personal", controller.atualizar_conta)
+rota.put("/addImg", controller.addImg)
+rota.get("/sair", (req, res) => { req.session.destroy(), res.redirect("/")})
+rota.put("/descricao", controller.mudarDesc)
 
 module.exports = rota;

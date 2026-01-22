@@ -5,24 +5,47 @@
         <%- include("../../partials/navbar")%>
         <main>
             <h1>Olá mano <%=user.username%>! Suave?</h1>
+            <img id="imagem" src="<%=user.img%>" style="border-radius: 50%; margin-right: 20px;" height="100px" width="100px">
+            <form action="/addImg?_method=PUT" method="POST">
+                <input type="file" id="file">
+                <input hidden name="caminho" id="img" placeholder="editar a foto?">
+                <input hidden name="username" value="<%=user.username%>">
+                <button type="submit">Mudar a foto</button>
+            </form>
+            <h2> <%=user.descricao%> </h2>
+             
             <div class="recado" style="display: none;">
                 <h2 id="alerta"> Essa cor é clara, pode ser difícil enxergar </h2>
             </div>
             <form action="/personal?_method=PUT" method="POST" class="conta">
                 <h3>Cor do nome no chat: <span id="bacana" style="color: <%=user.cor%>">bacana</span></h3>
                 <input type="color" name="cor">
-                <input hidden name="nome" value="<%=user.username %>">
-
-                <% if(user.amigos) {%>
-                <% for(let i = 0; i<user.amigos.length; i++) {%>
-                    <h3>Amigos: <%=user.amigos[i]%></h3>
-                <% }} %>      
+                <input hidden name="nome" value="<%=user.username %>">     
                 <button type="submit">Enviar</button>     
             </form>
-            <% if(user.notifica) {%>
-            <% for(let i = 0; i<user.notifica.length; i++) {%>
-                <h3>Mensagens: <%=user.notifica[i]%></h3>
-            <% }} %>
+
+            <form action="/descricao?_method=PUT" method="POST" style="display: flex; align-items: center; flex-direction: column; gap: 10px; margin-bottom: 2%;">
+                <h2>Descrição</h2>
+                <input placeholder="Seja breve" type="text" name="descricao">
+                <input hidden name="nome" value="<%=user.username %>">  
+                <button type="submit">Mudar</button>
+            </form>
+
+            <a href="/deleteConta/<%=user.username%>"> Apagar conta? </a>
+            <a href="/sair"> Sair! </a>
+
+            <h1>Todos ;D</h1>
+            <% for (let i = 0; i<contas.length; i++) {%>
+                <% if(contas[i].username !== user.username) {%>
+                    <div>
+                        <div style="display: flex; flex-direction: row;  align-items: center; gap: 20px">
+                            <img src="<%=contas[i].img%>" style="border-radius: 50%;" height="20px" width="auto">
+                            <h3><%=contas[i].username%></h3> 
+                            <h4>"<%=contas[i].descricao%>"</h4>
+                        </div>
+                       
+                    </div>
+                <% }} %>
         </main>
     </body>
 </html>
@@ -44,5 +67,13 @@
         } else {
             document.getElementsByClassName("recado")[0].style.display = "none"
         }
+    })
+
+    const file_input = document.getElementById("file")
+    file_input.addEventListener("change", () => {
+        let file = file_input.files[0];
+        file = URL.createObjectURL(file)
+        document.getElementById("imagem").src = file
+        document.getElementById("img").value = file
     })
 </script>

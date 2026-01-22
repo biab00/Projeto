@@ -258,9 +258,9 @@ const galeria = async (req, res) => {
 
 const conta = async (req, res) => {
     if(req.session.username){
-        console.log(req.session.username)
         const user = await model.config(req.session.username)
-        if (user) return res.render("pages/objetos/config", {user})
+        const contas = await model.todas_contas()
+        if (user) return res.render("pages/objetos/config", {user, contas})
         else return res.send("Usuário não encontrado")
     }
     else{
@@ -273,5 +273,19 @@ const atualizar_conta = async (req, res) => {
     res.redirect("/config")
 }
 
+const deleteConta = async (req, res) => {
+    await model.deleteConta(req.params.username)
+    res.redirect("/")
+} 
 
-module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat, galeria, conta,atualizar_conta, deleteLista, addLista, lista, atualizar_lista};
+const addImg = async (req, res) => {
+    await model.addImg(req.body.caminho, req.body.username)
+    res.redirect("/config")
+}
+
+const mudarDesc = async (req, res) => {
+    await model.mudarDesc(req.body)
+    res.redirect("/config")
+}
+
+module.exports = {inicio, cadastro, login, livros, jogos, tv, datas, add, musicas, addJogo, deleteJogo, addMusica, deleteMusica, addTv, addLivro, deleteLivro, deleteTV, musicos, chat, addChat, deletChat, galeria, conta,atualizar_conta, deleteLista, addLista, lista, atualizar_lista, addImg, deleteConta, mudarDesc};
